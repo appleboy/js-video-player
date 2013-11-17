@@ -1,6 +1,11 @@
 (function ($, window, document) {
     "use strict";
+    var ovoplayer;
 
+    /**
+    @method load_script
+    @param type {youtube|dailymotion|vimeo}
+    */
     var load_script = function (type) {
         var e, s, url;
         type = type || 'youtube';
@@ -30,12 +35,13 @@
 
     $.fn.ovoplayer.init = function(options) {
         // Apply any options to the settings, override the defaults
-        var player, params, iframe, o = $.fn.ovoplayer.settings = $.extend({}, $.fn.ovoplayer.defaults, options);
+        var params, iframe, o = $.fn.ovoplayer.settings = $.extend({}, $.fn.ovoplayer.defaults, options);
+        // load third party script.
         load_script(o.type);
         switch (o.type) {
             case 'youtube':
                 window.onYouTubeIframeAPIReady = function () {
-                    player = new YT.Player(o.player, {
+                    ovoplayer = new YT.Player(o.player, {
                         width: o.width,
                         height: o.height,
                         videoId: o.code,
@@ -55,10 +61,10 @@
                 window.dmAsyncInit = function() {
                     // PARAMS is a javascript object containing parameters to pass to the player if any (eg: {autoplay: 1})
                     params = (o.autoplay) ? {autoplay: 1} : {};
-                    player = DM.player(o.player, {video: o.code, width: o.width, height: o.height, params: params});
+                    ovoplayer = DM.player(o.player, {video: o.code, width: o.width, height: o.height, params: params});
 
                     // 4. We can attach some events on the player (using standard DOM events)
-                    player.addEventListener("apiready", function(e) {
+                    ovoplayer.addEventListener("apiready", function(e) {
                         e.target.play();
                     });
                 };
@@ -76,8 +82,8 @@
                 }
                 window.ready = function(player_id) {
                     // Keep a reference to Froogaloop for this player
-                    player = $f(player_id);
-                    player.api('play');
+                    ovoplayer = $f(player_id);
+                    ovoplayer.api('play');
                 };
 
                 window.addEventListener('load', function() {

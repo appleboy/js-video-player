@@ -1,10 +1,10 @@
 $(function() {
     $.ovoplayer({
         type: 'youtube',
-        code: 'eGNqW9sybyU'
+        code: 'xWzlwGVQ6_Q'
         /*
         type: 'vimeo',
-        code: '78921757'
+        code: '68116854'
         type: 'dailymotion',
         code: 'xrs3bh'
         */
