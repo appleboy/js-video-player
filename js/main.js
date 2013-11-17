@@ -9,4 +9,13 @@ $(function() {
         code: 'xrs3bh'
         */
     });
+    $(document).on('click', '.init', function(e) {
+        var type = $(this).data('type'),
+            code = $(this).data('code');
+        e.preventDefault();
+        $.ovoplayer.update({
+            type: type,
+            code: code
+        });
+    });
 });
