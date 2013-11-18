@@ -53,14 +53,10 @@
                 ovoplayer.item.destroy();
                 ovoplayer.item = undefined;
             }
-            if (ovoplayer.current.type == 'dailymotion') {
-                //ovoplayer.item.destroy();
-                //ovoplayer.item = undefined;
-            }
         }
         switch (o.type) {
             case 'youtube':
-                ovoplayer.item = new YT.Player(o.player, {
+                ovoplayer.item = new YT.Player(o.frame_id.youtube, {
                     width: o.width,
                     height: o.height,
                     videoId: o.code,
@@ -81,7 +77,7 @@
                 } else {
                     // PARAMS is a javascript object containing parameters to pass to the player if any (eg: {autoplay: 1})
                     params = (o.autoplay) ? {autoplay: 1} : {};
-                    ovoplayer.item = DM.player(o.player, {video: o.code, width: o.width, height: o.height, params: params});
+                    ovoplayer.item = DM.player(o.vimeo.dailymotion, {video: o.code, width: o.width, height: o.height, params: params});
 
                     // 4. We can attach some events on the player (using standard DOM events)
                     ovoplayer.item.addEventListener("apiready", function(e) {
@@ -91,7 +87,7 @@
                 break;
             case 'vimeo':
                 iframe = '<iframe id="' + o.vimeoPlayer + '" src="//player.vimeo.com/video/' + o.code + '?api=1&amp;player_id=' + o.vimeoPlayer + '" autoplay="true" width="' + o.width + '" height="' + o.height + '" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>';
-                $('#' + o.player).html(iframe);
+                $('#' + o.frame_id.dailymotion).html(iframe);
                 window.addEvent = function(element, eventName, callback) {
                     if (element.addEventListener) {
                         element.addEventListener(eventName, callback, false);
@@ -118,12 +114,18 @@
     $.fn.ovoplayer.init = function(options) {
         // Apply any options to the settings, override the defaults
         var params, iframe, o = $.fn.ovoplayer.settings = $.extend({}, $.fn.ovoplayer.defaults, options);
+        // insert video frame
+        $.each(o.frame_id, function(key, value) {
+            $('<div/>', {
+                id: value
+            }).appendTo('#' + o.id);
+        });
         // load third party script.
         load_script(o.type);
         switch (o.type) {
             case 'youtube':
                 window.onYouTubeIframeAPIReady = function () {
-                    ovoplayer.item = new YT.Player(o.player, {
+                    ovoplayer.item = new YT.Player(o.frame_id.youtube, {
                         width: o.width,
                         height: o.height,
                         videoId: o.code,
@@ -143,7 +145,7 @@
                 window.dmAsyncInit = function() {
                     // PARAMS is a javascript object containing parameters to pass to the player if any (eg: {autoplay: 1})
                     params = (o.autoplay) ? {autoplay: 1} : {};
-                    ovoplayer.item = DM.player(o.player, {video: o.code, width: o.width, height: o.height, params: params});
+                    ovoplayer.item = DM.player(o.frame_id.dailymotion, {video: o.code, width: o.width, height: o.height, params: params});
 
                     // 4. We can attach some events on the player (using standard DOM events)
                     ovoplayer.item.addEventListener("apiready", function(e) {
@@ -153,7 +155,7 @@
                 break;
             case 'vimeo':
                 iframe = '<iframe id="' + o.vimeoPlayer + '" src="//player.vimeo.com/video/' + o.code + '?api=1&amp;player_id=' + o.vimeoPlayer + '" autoplay="true" width="' + o.width + '" height="' + o.height + '" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>';
-                $('#' + o.player).html(iframe);
+                $('#' + o.frame_id.vimeo).html(iframe);
                 window.addEvent = function(element, eventName, callback) {
                     if (element.addEventListener) {
                         element.addEventListener(eventName, callback, false);
@@ -179,7 +181,12 @@
 
     // Defaults
     $.fn.ovoplayer.defaults = {
-        player: 'player',
+        id: 'player_frome',
+        frame_id: {
+            youtube: 'youtube_frame',
+            vimeo: 'vimeo_frame',
+            dailymotion: 'dailymotion_frame'
+        },
         vimeoPlayer: 'vimeo_player',
         width: 640,
         height: 480,
