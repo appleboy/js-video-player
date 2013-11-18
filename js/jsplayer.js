@@ -1,7 +1,124 @@
 (function ($, window, document) {
     "use strict";
-    var ovoplayer = {};
+    var ovoplayer = {}, player = {};
     ovoplayer.load_script = [];
+
+    ovoplayer.youtube = function() {
+        this.is_init = false;
+        this.player = undefined;
+        this.options = $.fn.ovoplayer.settings;
+        this.initialize.apply(this, arguments);
+    };
+
+    $.extend(ovoplayer.youtube.prototype, {
+        initialize: function(){
+            var self = this;
+            window.onYouTubeIframeAPIReady = function () {
+                self.player = new YT.Player(self.options.frame_id.youtube, {
+                    width: self.options.width,
+                    height: self.options.height,
+                    videoId: self.options.code,
+                    events: {
+                        'onReady': self.onPlayerReady,
+                        'onStateChange': self.onPlayerStateChange
+                    }
+                });
+            };
+        },
+        onPlayerStateChange: function(e) {
+            if (e.data == YT.PlayerState.PLAYING) {
+                console.log('Video playing');
+            } else {
+                console.log('Video has paused');
+            }
+        },
+        onPlayerReady: function(e) {
+            if ($.fn.ovoplayer.settings.autoplay) {
+                e.target.playVideo();
+            }
+        },
+        stopVideo: function() {
+            this.player.stopVideo();
+        },
+        playVideo: function() {
+            this.player.playVideo();
+        },
+        pauseVideo: function() {
+            this.player.pauseVideo();
+        },
+        seekTo: function(seconds) {
+            this.player.playVideo(seconds);
+        },
+        updateVideo: function(setting) {
+            var options = {
+                videoId: setting.code,
+            };
+            if (setting.start) {
+                options.startSeconds = setting.start;
+            }
+            if (setting.end) {
+                options.endSeconds = setting.end;
+            }
+            if (setting.quality) {
+                options.suggestedQuality = setting.quality;
+            }
+            this.player.loadVideoById(options);
+        },
+        setPlaybackQuality: function(quality) {
+            this.player.setPlaybackQuality(quality);
+        },
+        getPlaybackQuality: function(quality) {
+            return this.player.getPlaybackQuality();
+        },
+        init: function() {
+            var e, s, url = 'https://www.youtube.com/iframe_api';
+            if (this.is_init) return;
+            e = document.createElement('script');
+            e.src = url;
+            e.async = true;
+            s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(e, s);
+            this.is_init = true;
+        }
+    });
+
+    ovoplayer.dailymotion = function() {
+        this.is_init = false;
+        this.initialize.apply(this, arguments);
+    };
+
+    $.extend(ovoplayer.dailymotion.prototype, {
+        initialize: function(){
+
+        },
+        init: function() {
+            var e, s, url = document.location.protocol + '//api.dmcdn.net/all.js';
+            if (this.is_init) return;
+            e = document.createElement('script');
+            e.src = url;
+            e.async = true;
+            s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(e, s);
+            this.is_init = true;
+        }
+    });
+
+    ovoplayer.vimeo = function() {
+        this.is_init = false;
+    };
+
+    $.extend(ovoplayer.vimeo.prototype, {
+        init: function() {
+            var e, s, url = 'http://a.vimeocdn.com/js/froogaloop2.min.js?938a9-1384184538';
+            if (this.is_init) return;
+            e = document.createElement('script');
+            e.src = url;
+            e.async = true;
+            s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(e, s);
+            this.is_init = true;
+        }
+    });
 
     /**
     @method load_script
@@ -45,31 +162,12 @@
 
     $.fn.ovoplayer.update = function (settings) {
         var params, iframe, o = $.fn.ovoplayer.settings = $.extend({}, $.fn.ovoplayer.defaults, ovoplayer.settings, settings);
-        if (!ovoplayer.load_script[o.type]) {
-            return $.fn.ovoplayer.init(o);
-        }
-        if (ovoplayer.item) {
-            if (ovoplayer.current.type == 'youtube') {
-                ovoplayer.item.destroy();
-                ovoplayer.item = undefined;
-            }
-        }
+        player[o.type].init();
         switch (o.type) {
             case 'youtube':
-                ovoplayer.item = new YT.Player(o.frame_id.youtube, {
-                    width: o.width,
-                    height: o.height,
-                    videoId: o.code,
-                    events: {
-                        'onReady': onPlayerReady
-                    }
+                player[o.type].updateVideo({
+                    code: o.code
                 });
-
-                window.onPlayerReady = function(e) {
-                    if (o.autoplay) {
-                        e.target.playVideo();
-                    }
-                }
                 break;
             case 'dailymotion':
                 if (ovoplayer.current.type == o.type) {
@@ -113,33 +211,19 @@
 
     $.fn.ovoplayer.init = function(options) {
         // Apply any options to the settings, override the defaults
-        var params, iframe, o = $.fn.ovoplayer.settings = $.extend({}, $.fn.ovoplayer.defaults, options);
+        var ovo = [], params, iframe, o = $.fn.ovoplayer.settings = $.extend({}, $.fn.ovoplayer.defaults, options);
         // insert video frame
         $.each(o.frame_id, function(key, value) {
             $('<div/>', {
                 id: value
             }).appendTo('#' + o.id);
+            // new video player function
+            player[key] = new ovoplayer[key]
         });
         // load third party script.
-        load_script(o.type);
+        player[o.type].init();
         switch (o.type) {
             case 'youtube':
-                window.onYouTubeIframeAPIReady = function () {
-                    ovoplayer.item = new YT.Player(o.frame_id.youtube, {
-                        width: o.width,
-                        height: o.height,
-                        videoId: o.code,
-                        events: {
-                            'onReady': onPlayerReady
-                        }
-                    });
-                };
-
-                window.onPlayerReady = function(e) {
-                    if (o.autoplay) {
-                        e.target.playVideo();
-                    }
-                }
                 break;
             case 'dailymotion':
                 window.dmAsyncInit = function() {
