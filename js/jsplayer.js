@@ -46,6 +46,28 @@
         seekTo: function(seconds) {
             this.player.seekTo(seconds);
         },
+        getPlayerState: function() {
+            return this.player.getPlayerState();
+        },
+        getCurrentTime: function() {
+            return this.player.getCurrentTime();
+        },
+        getDuration: function() {
+            return this.player.getDuration();
+        },
+        getVideoUrl: function() {
+            return this.player.getVideoUrl();
+        },
+        getVideoEmbedCode: function() {
+            return this.player.getVideoEmbedCode();
+        },
+        getPlaybackQuality: function() {
+            return this.player.getPlaybackQuality();
+        },
+        setPlaybackQuality: function(quality) {
+            // small, medium, large, hd720, hd1080, highres or default
+            this.player.setPlaybackQuality(quality);
+        },
         updateVideo: function(setting) {
             var options = {
                 videoId: setting.code,
@@ -60,12 +82,6 @@
                 options.suggestedQuality = setting.quality;
             }
             this.player.loadVideoById(options);
-        },
-        setPlaybackQuality: function(quality) {
-            this.player.setPlaybackQuality(quality);
-        },
-        getPlaybackQuality: function() {
-            return this.player.getPlaybackQuality();
         },
         init: function() {
             var e, s, url = 'https://www.youtube.com/iframe_api';
@@ -329,7 +345,6 @@
             player[key] = new ovoplayer[key]
         });
         // load third party script.
-        console.log(o.type);
         player[o.type].init();
         set_current_data();
     };
