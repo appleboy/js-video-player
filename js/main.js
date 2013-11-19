@@ -1,12 +1,12 @@
 $(function() {
     $.ovoplayer({
-        type: 'youtube',
-        code: 'xWzlwGVQ6_Q'
+        type: 'dailymotion',
+        code: 'xrs3bh'
         /*
         type: 'vimeo',
         code: '68116854'
-        type: 'dailymotion',
-        code: 'xrs3bh'
+        type: 'youtube',
+        code: 'xWzlwGVQ6_Q'
         */
     });
     $(document).on('click', '.init', function(e) {

@@ -1,7 +1,6 @@
 (function ($, window, document) {
     "use strict";
     var ovoplayer = {}, player = {};
-    ovoplayer.load_script = [];
 
     ovoplayer.youtube = function() {
         this.is_init = false;
@@ -47,7 +46,7 @@
             this.player.pauseVideo();
         },
         seekTo: function(seconds) {
-            this.player.playVideo(seconds);
+            this.player.seekTo(seconds);
         },
         updateVideo: function(setting) {
             var options = {
@@ -67,7 +66,7 @@
         setPlaybackQuality: function(quality) {
             this.player.setPlaybackQuality(quality);
         },
-        getPlaybackQuality: function(quality) {
+        getPlaybackQuality: function() {
             return this.player.getPlaybackQuality();
         },
         init: function() {
@@ -84,12 +83,68 @@
 
     ovoplayer.dailymotion = function() {
         this.is_init = false;
+        this.player = undefined;
+        this.options = $.fn.ovoplayer.settings;
         this.initialize.apply(this, arguments);
     };
 
     $.extend(ovoplayer.dailymotion.prototype, {
         initialize: function(){
+            var self = this;
+            window.dmAsyncInit = function() {
+                // PARAMS is a javascript object containing parameters to pass to the player if any (eg: {autoplay: 1})
+                var params = (self.options.autoplay) ? {autoplay: 1} : {};
+                self.player = DM.player(self.options.frame_id.dailymotion, {video: self.options.code, width: self.options.width, height: self.options.height, params: params});
 
+                // 4. We can attach some events on the player (using standard DOM events)
+                self.player.addEventListener("apiready", function(e) {
+                    if (self.options.autoplay) {
+                        e.target.play();
+                    }
+                });
+            };
+        },
+        updateVideo: function(setting) {
+            if (setting.code) {
+                this.player.load(setting.code);
+            }
+        },
+        stopVideo: function() {
+            this.player.stopVideo();
+        },
+        playVideo: function() {
+            this.player.playVideo();
+        },
+        pauseVideo: function() {
+            this.player.pauseVideo();
+        },
+        seekTo: function(seconds) {
+            this.player.seekTo(seconds);
+        },
+        setPlaybackQuality: function(quality) {
+            this.player.setPlaybackQuality(quality);
+        },
+        getPlaybackQuality: function() {
+            return this.player.getPlaybackQuality();
+        },
+        mute: function() {
+            if (!this.isMuted()) {
+                this.player.mute();
+            }
+        },
+        unMute: function() {
+            if (this.isMuted()) {
+                this.player.unMute();
+            }
+        },
+        isMuted: function() {
+            return this.player.isMuted();
+        },
+        setVolume: function(volume) {
+            this.player.setVolume(volume);
+        },
+        getVolume: function() {
+            return this.player.getVolume();
         },
         init: function() {
             var e, s, url = document.location.protocol + '//api.dmcdn.net/all.js';
@@ -120,36 +175,6 @@
         }
     });
 
-    /**
-    @method load_script
-    @param type {youtube|dailymotion|vimeo}
-    */
-    var load_script = function (type) {
-        var e, s, url;
-        if (ovoplayer.load_script[type]) {
-            return;
-        } else {
-            ovoplayer.load_script[type] = true;
-        }
-        type = type || 'youtube';
-        switch (type) {
-            case 'youtube':
-                url = 'https://www.youtube.com/iframe_api';
-                break;
-            case 'dailymotion':
-                url = document.location.protocol + '//api.dmcdn.net/all.js';
-                break;
-            case 'vimeo':
-                url = 'http://a.vimeocdn.com/js/froogaloop2.min.js?938a9-1384184538';
-                break;
-        }
-        e = document.createElement('script');
-        e.src = url;
-        e.async = true;
-        s = document.getElementsByTagName('script')[0];
-        s.parentNode.insertBefore(e, s);
-    };
-
     var set_current_data = function () {
         ovoplayer.current = $.fn.ovoplayer.settings;
     }
@@ -170,18 +195,9 @@
                 });
                 break;
             case 'dailymotion':
-                if (ovoplayer.current.type == o.type) {
-                    ovoplayer.item.load(o.code);
-                } else {
-                    // PARAMS is a javascript object containing parameters to pass to the player if any (eg: {autoplay: 1})
-                    params = (o.autoplay) ? {autoplay: 1} : {};
-                    ovoplayer.item = DM.player(o.vimeo.dailymotion, {video: o.code, width: o.width, height: o.height, params: params});
-
-                    // 4. We can attach some events on the player (using standard DOM events)
-                    ovoplayer.item.addEventListener("apiready", function(e) {
-                        e.target.play();
-                    });
-                }
+                player[o.type].updateVideo({
+                    code: o.code
+                });
                 break;
             case 'vimeo':
                 iframe = '<iframe id="' + o.vimeoPlayer + '" src="//player.vimeo.com/video/' + o.code + '?api=1&amp;player_id=' + o.vimeoPlayer + '" autoplay="true" width="' + o.width + '" height="' + o.height + '" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>';
@@ -226,16 +242,6 @@
             case 'youtube':
                 break;
             case 'dailymotion':
-                window.dmAsyncInit = function() {
-                    // PARAMS is a javascript object containing parameters to pass to the player if any (eg: {autoplay: 1})
-                    params = (o.autoplay) ? {autoplay: 1} : {};
-                    ovoplayer.item = DM.player(o.frame_id.dailymotion, {video: o.code, width: o.width, height: o.height, params: params});
-
-                    // 4. We can attach some events on the player (using standard DOM events)
-                    ovoplayer.item.addEventListener("apiready", function(e) {
-                        e.target.play();
-                    });
-                };
                 break;
             case 'vimeo':
                 iframe = '<iframe id="' + o.vimeoPlayer + '" src="//player.vimeo.com/video/' + o.code + '?api=1&amp;player_id=' + o.vimeoPlayer + '" autoplay="true" width="' + o.width + '" height="' + o.height + '" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>';
