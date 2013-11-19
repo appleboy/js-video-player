@@ -96,7 +96,12 @@
             if (setting.quality) {
                 options.suggestedQuality = setting.quality;
             }
-            this.player.loadVideoById(options);
+            if (this.player) {
+                this.player.loadVideoById(options);
+            } else {
+                this.options = setting;
+                this.init();
+            }
         },
         init: function() {
             var e, s, url = 'https://www.youtube.com/iframe_api';
@@ -180,8 +185,11 @@
             this.player.toggleMuted();
         },
         updateVideo: function(setting) {
-            if (setting.code) {
+            if (setting.code && this.player) {
                 this.player.load(setting.code);
+            } else {
+                this.options = setting;
+                this.init();
             }
         },
         init: function() {
@@ -220,7 +228,7 @@
             };
         },
         onplayProgress: function(e) {
-            console.log('on playProgress');
+            //console.log('on playProgress');
         },
         onPlay: function(player_id) {
             console.log('on onPlay');
@@ -308,7 +316,6 @@
     }
 
     $.fn.ovoplayer = function (settings) {
-        var self = this;
         ovoplayer.settings = settings;
         $.fn.ovoplayer.init(settings);
     };
@@ -326,24 +333,18 @@
     };
 
     $.fn.ovoplayer.update = function (settings) {
-        var params, iframe, o = $.fn.ovoplayer.settings = $.extend({}, $.fn.ovoplayer.defaults, ovoplayer.settings, settings);
-        player[o.type].init();
-        /*
+        var o = $.fn.ovoplayer.settings = $.extend({}, $.fn.ovoplayer.defaults, ovoplayer.settings, settings);
+
         // pause current video
         player[ovoplayer.current.type].pauseVideo();
         if (o.type != ovoplayer.current.type) {
-            if (ovoplayer.current.type == 'youtube') {
-                player[ovoplayer.current.type].stopVideo();
-            }
             // hide all video frame
-            //$('.' + o.iframeClass).hide();
+            $('.' + o.iframeClass).hide();
             // show current video frame
-            //$('#' + o.frame_id[o.type]).show();
+            $('#' + o.frame_id[o.type]).show();
         }
-        */
-        player[o.type].updateVideo({
-            code: o.code
-        });
+
+        player[o.type].updateVideo(o);
         set_current_data();
     };
 
