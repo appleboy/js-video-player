@@ -1,22 +1,5 @@
 $(function() {
-    $.ovoplayer({
-        type: 'vimeo',
-        code: '68116854',
-        playList: [{
-            type: 'dailymotion',
-            code: 'xrs3bh'}, {
-            type: 'youtube',
-            code: 'xWzlwGVQ6_Q'
-            }]
-        /*
-        type: 'vimeo',
-        code: '68116854'
-        type: 'dailymotion',
-        code: 'xrs3bh'
-        type: 'youtube',
-        code: 'xWzlwGVQ6_Q'
-        */
-    });
+    var playList = [];
     $(document).on('click', 'button', function(e) {
         var type = $(this).data('type');
         switch (type) {
@@ -42,5 +25,28 @@ $(function() {
             type: type,
             code: code
         });
+    });
+
+    // get play list
+    $('a').each(function( index ) {
+        var obj = {
+            type: $(this).data('type'),
+            code: $(this).data('code')
+        };
+        playList.push(obj);
+    });
+
+    $.ovoplayer({
+        type: 'vimeo',
+        code: '68116854',
+        playList: playList
+        /*
+        type: 'vimeo',
+        code: '68116854'
+        type: 'dailymotion',
+        code: 'xrs3bh'
+        type: 'youtube',
+        code: 'xWzlwGVQ6_Q'
+        */
     });
 });
