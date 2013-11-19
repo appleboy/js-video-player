@@ -213,6 +213,51 @@
                 }
             };
         },
+        playVideo: function() {
+            this.player.play();
+        },
+        pauseVideo: function() {
+            this.player.pause();
+        },
+        seekTo: function(seconds) {
+            this.player.seekTo(seconds);
+        },
+        unload: function() {
+            this.player.unload();
+        },
+        getCurrentTime: function() {
+            return this.player.getCurrentTime();
+        },
+        getDuration: function() {
+            return this.player.getDuration();
+        },
+        getVideoEmbedCode: function() {
+            return this.player.getVideoEmbedCode();
+        },
+        getVideoHeight: function() {
+            return this.player.getVideoHeight();
+        },
+        getVideoWidth: function() {
+            return this.player.getVideoWidth();
+        },
+        getVideoUrl: function() {
+            return this.player.getVideoUrl();
+        },
+        getColor: function() {
+            return this.player.getColor();
+        },
+        getVolume: function() {
+            return this.player.getVolume();
+        },
+        setColor: function(color) {
+            this.player.setColor(color);
+        },
+        setLoop: function(loop) {
+            this.player.setLoop(loop);
+        },
+        setVolume: function(volume) {
+            this.player.setVolume(volume);
+        },
         updateVideo: function(setting) {
             var iframe = '<iframe id="' + this.options.vimeoPlayer + '" src="//player.vimeo.com/video/' + setting.code + '?api=1&amp;player_id=' + this.options.vimeoPlayer + '" autoplay="true" width="' + this.options.width + '" height="' + this.options.height + '" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>';
             $('#' + this.options.frame_id.vimeo).html(iframe);
