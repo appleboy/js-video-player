@@ -1,6 +1,12 @@
 (function ($, window, document) {
     "use strict";
-    var ovoplayer = {}, player = {};
+    var ovoplayer = {}, player = {},
+    log = function(message) {
+        if (!$.fn.ovoplayer.settings.debug) {
+            return;
+        }
+        console.log(message);
+    };
 
     ovoplayer.youtube = function() {
         this.is_init = false;
@@ -24,7 +30,7 @@
             };
         },
         onError: function(e) {
-            console.log('youtube error');
+            log('youtube error');
         },
         onPlayerStateChange: function(e) {
             /**
@@ -35,14 +41,14 @@
              * YT.PlayerState.CUED
               */
             if (e.data == YT.PlayerState.PLAYING) {
-                console.log('Video playing');
+                log('Video playing');
             } else if (e.data == YT.PlayerState.ENDED) {
-                console.log('Video has ended');
+                log('Video has ended');
                 $.fn.ovoplayer.next();
             } else if (e.data == YT.PlayerState.PAUSED) {
-                console.log('Video has paued');
+                log('Video has paued');
             } else if (e.data == YT.PlayerState.BUFFERING) {
-                console.log('Video buffering');
+                log('Video buffering');
             }
         },
         onPlayerReady: function(e) {
@@ -147,23 +153,23 @@
             }
         },
         onPlaying: function(e) {
-            console.log('Event is onPlaying');
+            log('Event is onPlaying');
         },
         onPlay: function(e) {
-            console.log('Event is onPlay');
+            log('Event is onPlay');
         },
         onPause: function(e) {
-            console.log('Event is onPause');
+            log('Event is onPause');
         },
         onEnded: function(e) {
-            console.log('Event is onEnded');
+            log('Event is onEnded');
             $.fn.ovoplayer.next();
         },
         onSeeking: function(e) {
-            console.log('Event is onSeeking');
+            log('Event is onSeeking');
         },
         onSeeked: function(e) {
-            console.log('Event is onSeeked');
+            log('Event is onSeeked');
         },
         playVideo: function() {
             this.player.play();
@@ -230,20 +236,20 @@
             };
         },
         onplayProgress: function(e) {
-            //console.log('on playProgress');
+            //log('on playProgress');
         },
         onPlay: function(player_id) {
-            console.log('on onPlay');
+            log('on onPlay');
         },
         onPause: function(player_id) {
-            console.log('on onPause');
+            log('on onPause');
         },
         onFinish: function(player_id) {
-            console.log('on onFinish');
+            log('on onFinish');
             $.fn.ovoplayer.next();
         },
         onSeek: function(e) {
-            console.log('on onSeek');
+            log('on onSeek');
         },
         playVideo: function() {
             this.player.api('play');
@@ -390,7 +396,8 @@
         vimeoPlayer: 'vimeo_player',
         width: 640,
         height: 480,
-        autoplay: true
+        autoplay: true,
+        debug: false
     };
 
     $.ovoplayer = $.fn.ovoplayer;
