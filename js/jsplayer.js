@@ -106,6 +106,11 @@
                 self.player.addEventListener("seeked", self.onSeeked);
             };
         },
+        onApiReady: function(e) {
+            if (this.options.autoplay) {
+                e.target.play();
+            }
+        },
         onPlaying: function(e) {
             console.log('Event is onPlaying');
             console.log(e);
@@ -129,16 +134,6 @@
         onSeeked: function(e) {
             console.log('Event is onSeeked');
             console.log(e);
-        },
-        onApiReady: function(e) {
-            if (this.options.autoplay) {
-                e.target.play();
-            }
-        },
-        updateVideo: function(setting) {
-            if (setting.code) {
-                this.player.load(setting.code);
-            }
         },
         stopVideo: function() {
             this.player.stopVideo();
@@ -177,6 +172,11 @@
         getVolume: function() {
             return this.player.getVolume();
         },
+        updateVideo: function(setting) {
+            if (setting.code) {
+                this.player.load(setting.code);
+            }
+        },
         init: function() {
             var e, s, url = document.location.protocol + '//api.dmcdn.net/all.js';
             if (this.is_init) return;
@@ -191,9 +191,32 @@
 
     ovoplayer.vimeo = function() {
         this.is_init = false;
+        this.player = undefined;
+        this.options = $.fn.ovoplayer.settings;
+        this.initialize.apply(this, arguments);
     };
 
     $.extend(ovoplayer.vimeo.prototype, {
+        initialize: function(){
+            var self = this,
+            iframe = '<iframe id="' + this.options.vimeoPlayer + '" src="//player.vimeo.com/video/' + this.options.code + '?api=1&amp;player_id=' + this.options.vimeoPlayer + '" autoplay="true" width="' + this.options.width + '" height="' + this.options.height + '" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>';
+            $('#' + this.options.frame_id.vimeo).html(iframe);
+
+            window.addEventListener('load', function() {
+                $f(document.getElementById(self.options.vimeoPlayer)).addEvent('ready', onApiReady);
+            });
+
+            window.onApiReady = function(player_id) {
+                self.player = $f(player_id);
+                if (self.options.autoplay) {
+                    self.player.api('play');
+                }
+            };
+        },
+        updateVideo: function(setting) {
+            var iframe = '<iframe id="' + this.options.vimeoPlayer + '" src="//player.vimeo.com/video/' + setting.code + '?api=1&amp;player_id=' + this.options.vimeoPlayer + '" autoplay="true" width="' + this.options.width + '" height="' + this.options.height + '" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>';
+            $('#' + this.options.frame_id.vimeo).html(iframe);
+        },
         init: function() {
             var e, s, url = 'http://a.vimeocdn.com/js/froogaloop2.min.js?938a9-1384184538';
             if (this.is_init) return;
@@ -219,40 +242,9 @@
     $.fn.ovoplayer.update = function (settings) {
         var params, iframe, o = $.fn.ovoplayer.settings = $.extend({}, $.fn.ovoplayer.defaults, ovoplayer.settings, settings);
         player[o.type].init();
-        switch (o.type) {
-            case 'youtube':
-                player[o.type].updateVideo({
-                    code: o.code
-                });
-                break;
-            case 'dailymotion':
-                player[o.type].updateVideo({
-                    code: o.code
-                });
-                break;
-            case 'vimeo':
-                iframe = '<iframe id="' + o.vimeoPlayer + '" src="//player.vimeo.com/video/' + o.code + '?api=1&amp;player_id=' + o.vimeoPlayer + '" autoplay="true" width="' + o.width + '" height="' + o.height + '" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>';
-                $('#' + o.frame_id.dailymotion).html(iframe);
-                window.addEvent = function(element, eventName, callback) {
-                    if (element.addEventListener) {
-                        element.addEventListener(eventName, callback, false);
-                    }
-                    else {
-                        element.attachEvent('on' + eventName, callback);
-                    }
-                }
-                window.ready = function(player_id) {
-                    // Keep a reference to Froogaloop for this player
-                    ovoplayer.item = $f(player_id);
-                    ovoplayer.item.api('play');
-                };
-
-                window.addEventListener('load', function() {
-                    // Attach the ready event to the iframe
-                    $f(document.getElementById(o.vimeoPlayer)).addEvent('ready', ready);
-                });
-                break;
-        }
+        player[o.type].updateVideo({
+            code: o.code
+        });
         set_current_data();
     };
 
@@ -269,34 +261,6 @@
         });
         // load third party script.
         player[o.type].init();
-        switch (o.type) {
-            case 'youtube':
-                break;
-            case 'dailymotion':
-                break;
-            case 'vimeo':
-                iframe = '<iframe id="' + o.vimeoPlayer + '" src="//player.vimeo.com/video/' + o.code + '?api=1&amp;player_id=' + o.vimeoPlayer + '" autoplay="true" width="' + o.width + '" height="' + o.height + '" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>';
-                $('#' + o.frame_id.vimeo).html(iframe);
-                window.addEvent = function(element, eventName, callback) {
-                    if (element.addEventListener) {
-                        element.addEventListener(eventName, callback, false);
-                    }
-                    else {
-                        element.attachEvent('on' + eventName, callback);
-                    }
-                }
-                window.ready = function(player_id) {
-                    // Keep a reference to Froogaloop for this player
-                    ovoplayer.item = $f(player_id);
-                    ovoplayer.item.api('play');
-                };
-
-                window.addEventListener('load', function() {
-                    // Attach the ready event to the iframe
-                    $f(document.getElementById(o.vimeoPlayer)).addEvent('ready', ready);
-                });
-                break;
-        }
         set_current_data();
     };
 
