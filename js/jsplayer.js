@@ -235,49 +235,49 @@
             console.log('on onSeek');
         },
         playVideo: function() {
-            $f(this.options.vimeoPlayer).api('play');
+            this.player.api('play');
         },
         pauseVideo: function() {
-            self.player.api('pause');
+            this.player.api('pause');
         },
         seekTo: function(seconds) {
-            $f(this.options.vimeoPlayer).api('seekTo', seconds);
+            this.player.api('seekTo', seconds);
         },
         unload: function() {
-            $f(this.options.vimeoPlayer).api('unload');
+            this.player.api('unload');
         },
         getCurrentTime: function() {
-            return $f(this.options.vimeoPlayer).api('getCurrentTime');
+            return this.player.api('getCurrentTime');
         },
         getDuration: function() {
-            return $f(this.options.vimeoPlayer).api('getDuration');
+            return this.player.api('getDuration');
         },
         getVideoEmbedCode: function() {
-            return $f(this.options.vimeoPlayer).api('getVideoEmbedCode');
+            return this.player.api('getVideoEmbedCode');
         },
         getVideoHeight: function() {
-            return $f(this.options.vimeoPlayer).api('getVideoHeight');
+            return this.player.api('getVideoHeight');
         },
         getVideoWidth: function() {
-            return $f(this.options.vimeoPlayer).api('getVideoWidth');
+            return this.player.api('getVideoWidth');
         },
         getVideoUrl: function() {
-            return $f(this.options.vimeoPlayer).api('getVideoUrl');
+            return this.player.api('getVideoUrl');
         },
         getColor: function() {
-            return $f(this.options.vimeoPlayer).api('getColor');
+            return this.player.api('getColor');
         },
         getVolume: function() {
-            return $f(this.options.vimeoPlayer).api('getVolume');
+            return this.player.api('getVolume');
         },
         setColor: function(color) {
-            $f(this.options.vimeoPlayer).api('setColor', color);
+            this.player.api('setColor', color);
         },
         setLoop: function(loop) {
-            $f(this.options.vimeoPlayer).api('setLoop', loop);
+            this.player.api('setLoop', loop);
         },
         setVolume: function(volume) {
-            $f(this.options.vimeoPlayer).api('setVolume', volume);
+            this.player.api('setVolume', volume);
         },
         updateVideo: function(setting) {
             var iframe = '<iframe id="' + this.options.vimeoPlayer + '" src="//player.vimeo.com/video/' + setting.code + '?api=1&amp;player_id=' + this.options.vimeoPlayer + '" autoplay="true" width="' + this.options.width + '" height="' + this.options.height + '" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>';

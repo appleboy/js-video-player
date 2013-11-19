@@ -1,7 +1,7 @@
 $(function() {
     $.ovoplayer({
-        type: 'dailymotion',
-        code: 'xrs3bh'
+        type: 'vimeo',
+        code: '68116854'
         /*
         type: 'vimeo',
         code: '68116854'
