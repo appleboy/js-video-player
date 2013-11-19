@@ -142,64 +142,42 @@
         },
         onPlaying: function(e) {
             console.log('Event is onPlaying');
-            console.log(e);
         },
         onPlay: function(e) {
             console.log('Event is onPlay');
-            console.log(e);
         },
         onPause: function(e) {
             console.log('Event is onPause');
-            console.log(e);
         },
         onEnded: function(e) {
             console.log('Event is onEnded');
-            console.log(e);
         },
         onSeeking: function(e) {
             console.log('Event is onSeeking');
-            console.log(e);
         },
         onSeeked: function(e) {
             console.log('Event is onSeeked');
-            console.log(e);
-        },
-        stopVideo: function() {
-            this.player.stopVideo();
         },
         playVideo: function() {
-            this.player.playVideo();
+            this.player.play();
         },
         pauseVideo: function() {
-            this.player.pauseVideo();
+            this.player.pause();
         },
         seekTo: function(seconds) {
-            this.player.seekTo(seconds);
+            this.player.seek(seconds);
         },
-        setPlaybackQuality: function(quality) {
-            this.player.setPlaybackQuality(quality);
-        },
-        getPlaybackQuality: function() {
-            return this.player.getPlaybackQuality();
-        },
-        mute: function() {
-            if (!this.isMuted()) {
-                this.player.mute();
-            }
-        },
-        unMute: function() {
-            if (this.isMuted()) {
-                this.player.unMute();
-            }
-        },
-        isMuted: function() {
-            return this.player.isMuted();
+        togglePlay: function() {
+            this.player.togglePlay();
         },
         setVolume: function(volume) {
             this.player.setVolume(volume);
         },
-        getVolume: function() {
-            return this.player.getVolume();
+        setMuted: function(muted) {
+            this.player.setMuted(muted);
+        },
+        toggleMuted: function() {
+            this.player.toggleMuted();
         },
         updateVideo: function(setting) {
             if (setting.code) {
