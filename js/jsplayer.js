@@ -20,13 +20,28 @@
                 });
                 self.player.addEventListener('onReady', self.onPlayerReady);
                 self.player.addEventListener('onStateChange', self.onPlayerStateChange);
+                self.player.addEventListener('onError', self.onError);
             };
         },
+        onError: function(e) {
+            console.log('youtube error');
+        },
         onPlayerStateChange: function(e) {
+            /**
+             * YT.PlayerState.ENDED
+             * YT.PlayerState.PLAYING
+             * YT.PlayerState.PAUSED
+             * YT.PlayerState.BUFFERING
+             * YT.PlayerState.CUED
+              */
             if (e.data == YT.PlayerState.PLAYING) {
                 console.log('Video playing');
-            } else {
-                console.log('Video has paused');
+            } else if (e.data == YT.PlayerState.ENDED) {
+                console.log('Video has ended');
+            } else if (e.data == YT.PlayerState.PAUSED) {
+                console.log('Video has paued');
+            } else if (e.data == YT.PlayerState.BUFFERING) {
+                console.log('Video buffering');
             }
         },
         onPlayerReady: function(e) {
