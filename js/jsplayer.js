@@ -97,12 +97,43 @@
                 self.player = DM.player(self.options.frame_id.dailymotion, {video: self.options.code, width: self.options.width, height: self.options.height, params: params});
 
                 // 4. We can attach some events on the player (using standard DOM events)
-                self.player.addEventListener("apiready", function(e) {
-                    if (self.options.autoplay) {
-                        e.target.play();
-                    }
-                });
+                self.player.addEventListener("apiready", self.onApiReady);
+                self.player.addEventListener("playing", self.onPlaying);
+                self.player.addEventListener("playing", self.onPlay);
+                self.player.addEventListener("pause", self.onPause);
+                self.player.addEventListener("ended", self.onEnded);
+                self.player.addEventListener("seeking", self.onSeeking);
+                self.player.addEventListener("seeked", self.onSeeked);
             };
+        },
+        onPlaying: function(e) {
+            console.log('Event is onPlaying');
+            console.log(e);
+        },
+        onPlay: function(e) {
+            console.log('Event is onPlay');
+            console.log(e);
+        },
+        onPause: function(e) {
+            console.log('Event is onPause');
+            console.log(e);
+        },
+        onEnded: function(e) {
+            console.log('Event is onEnded');
+            console.log(e);
+        },
+        onSeeking: function(e) {
+            console.log('Event is onSeeking');
+            console.log(e);
+        },
+        onSeeked: function(e) {
+            console.log('Event is onSeeked');
+            console.log(e);
+        },
+        onApiReady: function(e) {
+            if (this.options.autoplay) {
+                e.target.play();
+            }
         },
         updateVideo: function(setting) {
             if (setting.code) {
