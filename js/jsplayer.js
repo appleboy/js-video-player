@@ -211,7 +211,34 @@
                 if (self.options.autoplay) {
                     self.player.api('play');
                 }
+
+                // add Events
+                self.player.addEvent("playProgress", self.onplayProgress);
+                self.player.addEvent("play", self.onPlay);
+                self.player.addEvent("pause", self.onPause);
+                self.player.addEvent("finish", self.onFinish);
+                self.player.addEvent("seek", self.onSeek);
             };
+        },
+        onplayProgress: function(e) {
+            console.log('on playProgress');
+            console.log(e);
+        },
+        onPlay: function(player_id  ) {
+            console.log('on onPlay');
+            console.log(e);
+        },
+        onPause: function(player_id) {
+            console.log('on onPause');
+            console.log(e);
+        },
+        onFinish: function(player_id) {
+            console.log('on onFinish');
+            console.log(e);
+        },
+        onSeek: function(e) {
+            console.log('on onSeek');
+            console.log(e);
         },
         playVideo: function() {
             this.player.play();
