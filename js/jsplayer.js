@@ -38,6 +38,7 @@
                 console.log('Video playing');
             } else if (e.data == YT.PlayerState.ENDED) {
                 console.log('Video has ended');
+                $.fn.ovoplayer.next();
             } else if (e.data == YT.PlayerState.PAUSED) {
                 console.log('Video has paued');
             } else if (e.data == YT.PlayerState.BUFFERING) {
@@ -156,6 +157,7 @@
         },
         onEnded: function(e) {
             console.log('Event is onEnded');
+            $.fn.ovoplayer.next();
         },
         onSeeking: function(e) {
             console.log('Event is onSeeking');
@@ -238,6 +240,7 @@
         },
         onFinish: function(player_id) {
             console.log('on onFinish');
+            $.fn.ovoplayer.next();
         },
         onSeek: function(e) {
             console.log('on onSeek');
@@ -330,6 +333,16 @@
 
     $.fn.ovoplayer.seek = function(seconds) {
         player[ovoplayer.current.type].seekTo(seconds);
+    };
+
+    $.fn.ovoplayer.next = function() {
+        var next;
+        if (!$.fn.ovoplayer.settings.playList || $.fn.ovoplayer.settings.playList.length == 0) {
+            return;
+        }
+
+        next = $.fn.ovoplayer.settings.playList.shift();
+        $.fn.ovoplayer.update(next);
     };
 
     $.fn.ovoplayer.update = function (settings) {

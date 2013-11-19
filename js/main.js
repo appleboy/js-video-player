@@ -1,7 +1,13 @@
 $(function() {
     $.ovoplayer({
         type: 'vimeo',
-        code: '68116854'
+        code: '68116854',
+        playList: [{
+            type: 'dailymotion',
+            code: 'xrs3bh'}, {
+            type: 'youtube',
+            code: 'xWzlwGVQ6_Q'
+            }]
         /*
         type: 'vimeo',
         code: '68116854'
@@ -22,6 +28,9 @@ $(function() {
                 break;
             case 'seek':
                 $.ovoplayer.seek(50);
+                break;
+            case 'next':
+                $.ovoplayer.next();
                 break;
         }
     });
