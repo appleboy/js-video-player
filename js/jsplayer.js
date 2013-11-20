@@ -1,6 +1,10 @@
 (function ($, window, document) {
     "use strict";
     var ovoplayer = {}, player = {},
+    nativeIsArray = Array.isArray,
+    isArray = nativeIsArray || function(obj) {
+        return toString.call(obj) == '[object Array]';
+    },
     log = function(message) {
         if (!$.fn.ovoplayer.settings.debug) {
             return;
@@ -350,7 +354,7 @@
 
     $.fn.ovoplayer.first = function() {
         var first;
-        if (!$.fn.ovoplayer.settings.playList || $.fn.ovoplayer.settings.playList.length == 0) {
+        if (!isArray($.fn.ovoplayer.settings.playList) || $.fn.ovoplayer.settings.playList.length == 0) {
             return;
         }
 
@@ -361,7 +365,7 @@
 
     $.fn.ovoplayer.last = function() {
         var last;
-        if (!$.fn.ovoplayer.settings.playList || $.fn.ovoplayer.settings.playList.length == 0) {
+        if (!isArray($.fn.ovoplayer.settings.playList) || $.fn.ovoplayer.settings.playList.length == 0) {
             return;
         }
 
@@ -372,7 +376,7 @@
 
     $.fn.ovoplayer.previous = function() {
         var previous, obj;
-        if (!$.fn.ovoplayer.settings.playList || $.fn.ovoplayer.settings.playList.length == 0) {
+        if (!isArray($.fn.ovoplayer.settings.playList) || $.fn.ovoplayer.settings.playList.length == 0) {
             return;
         }
 
@@ -402,7 +406,7 @@
 
     $.fn.ovoplayer.next = function() {
         var next, obj;
-        if (!$.fn.ovoplayer.settings.playList || $.fn.ovoplayer.settings.playList.length == 0) {
+        if (!isArray($.fn.ovoplayer.settings.playList) || $.fn.ovoplayer.settings.playList.length == 0) {
             return;
         }
 
