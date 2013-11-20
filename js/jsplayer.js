@@ -369,7 +369,7 @@
 
     $.fn.ovoplayer.init = function(options) {
         // Apply any options to the settings, override the defaults
-        var ovo = [], params, iframe, o = $.fn.ovoplayer.settings = $.extend({}, $.fn.ovoplayer.defaults, options);
+        var type, code, obj, ovo = [], params, iframe, o = $.fn.ovoplayer.settings = $.extend({}, $.fn.ovoplayer.defaults, options);
         // insert video frame
         $.each(o.frame_id, function(key, value) {
             $('<div/>', {
@@ -381,6 +381,20 @@
         });
         // load third party script.
         player[o.type].init();
+        // load play list.
+        if (o.playListClass && o.playListClass.length > 0) {
+            $('.' + o.playListClass).each(function(index) {
+                type = $(this).data('type');
+                code = $(this).data('code');
+                if (type && code && type.length > 0 && code.length > 0) {
+                    obj = {
+                        type: type,
+                        code: code
+                    }
+                    o.playList.push(obj);
+                }
+            });
+        }
         set_current_data();
     };
 
@@ -394,6 +408,10 @@
         },
         iframeClass: 'video_iframe',
         vimeoPlayer: 'vimeo_player',
+        // user define play list.
+        playList: [],
+        // auto fetch play list.
+        playListClass: null,
         width: 640,
         height: 480,
         autoplay: true,

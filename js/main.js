@@ -17,7 +17,7 @@ $(function() {
                 break;
         }
     });
-    $(document).on('click', '.init', function(e) {
+    $(document).on('click', '.play_list', function(e) {
         var type = $(this).data('type'),
             code = $(this).data('code');
         e.preventDefault();
@@ -28,7 +28,7 @@ $(function() {
     });
 
     // get play list
-    $('a').each(function( index ) {
+    $('.play_list').each(function( index ) {
         var obj = {
             type: $(this).data('type'),
             code: $(this).data('code')
@@ -39,8 +39,9 @@ $(function() {
     $.ovoplayer({
         type: 'vimeo',
         code: '68116854',
-        playList: playList
+        playListClass: 'play_list'
         /*
+        playList: playList
         type: 'vimeo',
         code: '68116854'
         type: 'dailymotion',
