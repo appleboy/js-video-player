@@ -386,13 +386,13 @@
 
     // Defaults
     $.fn.ovoplayer.defaults = {
-        id: 'player_frome',
+        id: 'player_frame',
         frame_id: {
             youtube: 'youtube_frame',
             vimeo: 'vimeo_frame',
             dailymotion: 'dailymotion_frame'
         },
-        iframeClass: 'video_ifrmae',
+        iframeClass: 'video_iframe',
         vimeoPlayer: 'vimeo_player',
         width: 640,
         height: 480,
