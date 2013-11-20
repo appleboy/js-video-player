@@ -340,12 +340,13 @@
         player[ovoplayer.current.type].seekTo(seconds);
     };
 
-    $.fn.ovoplayer.next = function() {
-        var next, obj;
+    $.fn.ovoplayer.previous = function() {
+        var previous, obj;
         if (!$.fn.ovoplayer.settings.playList || $.fn.ovoplayer.settings.playList.length == 0) {
             return;
         }
 
+        // repeat single video.
         if ($.fn.ovoplayer.settings.repeat) {
             obj = {
                 type: ovoplayer.current.type,
@@ -355,7 +356,47 @@
             return;
         }
 
-        next = $.fn.ovoplayer.settings.playList.shift();
+        if (!$.fn.ovoplayer.settings.playListIndex) {
+            $.fn.ovoplayer.settings.playListIndex = 1;
+        } else {
+            $.fn.ovoplayer.settings.playListIndex -= 1;
+        }
+
+        if ($.fn.ovoplayer.settings.playListIndex <= 0) {
+            $.fn.ovoplayer.settings.playListIndex = 1;
+        }
+
+        previous = $.fn.ovoplayer.settings.playList[($.fn.ovoplayer.settings.playListIndex - 1)];
+        $.fn.ovoplayer.update(previous);
+    };
+
+    $.fn.ovoplayer.next = function() {
+        var next, obj;
+        if (!$.fn.ovoplayer.settings.playList || $.fn.ovoplayer.settings.playList.length == 0) {
+            return;
+        }
+
+        // repeat single video.
+        if ($.fn.ovoplayer.settings.repeat) {
+            obj = {
+                type: ovoplayer.current.type,
+                code: ovoplayer.current.code
+            }
+            $.fn.ovoplayer.update(obj);
+            return;
+        }
+
+        if (!$.fn.ovoplayer.settings.playListIndex) {
+            $.fn.ovoplayer.settings.playListIndex = 1;
+        } else {
+            $.fn.ovoplayer.settings.playListIndex += 1;
+        }
+
+        if ($.fn.ovoplayer.settings.playListIndex > $.fn.ovoplayer.settings.playList.length) {
+            $.fn.ovoplayer.settings.playListIndex = $.fn.ovoplayer.settings.playList.length;
+        }
+
+        next = $.fn.ovoplayer.settings.playList[($.fn.ovoplayer.settings.playListIndex - 1)];
         $.fn.ovoplayer.update(next);
     };
 

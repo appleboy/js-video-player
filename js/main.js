@@ -15,6 +15,9 @@ $(function() {
             case 'next':
                 $.ovoplayer.next();
                 break;
+            case 'previous':
+                $.ovoplayer.previous();
+                break;
             case 'repeat':
                 var val = $(this).data('val');
                 if (val == '1') {
