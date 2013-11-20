@@ -325,7 +325,6 @@
     }
 
     $.fn.ovoplayer = function (settings) {
-        ovoplayer.settings = settings;
         $.fn.ovoplayer.init(settings);
     };
 
@@ -342,8 +341,18 @@
     };
 
     $.fn.ovoplayer.next = function() {
-        var next;
+        var next, obj;
         if (!$.fn.ovoplayer.settings.playList || $.fn.ovoplayer.settings.playList.length == 0) {
+            return;
+        }
+
+        console.log($.fn.ovoplayer.settings.repeat);
+        if ($.fn.ovoplayer.settings.repeat) {
+            obj = {
+                type: ovoplayer.current.type,
+                code: ovoplayer.current.code
+            }
+            $.fn.ovoplayer.update(obj);
             return;
         }
 
@@ -351,8 +360,16 @@
         $.fn.ovoplayer.update(next);
     };
 
+    $.fn.ovoplayer.repeat = function(repeat) {
+        $.fn.ovoplayer.settings.repeat = repeat;
+    };
+
+    $.fn.ovoplayer.repeatAll = function(repeat) {
+        $.fn.ovoplayer.settings.repeatAll = repeat;
+    };
+
     $.fn.ovoplayer.update = function (settings) {
-        var o = $.fn.ovoplayer.settings = $.extend({}, $.fn.ovoplayer.defaults, ovoplayer.settings, settings);
+        var o = $.fn.ovoplayer.settings = $.extend({}, $.fn.ovoplayer.settings, settings);
 
         // pause current video
         player[ovoplayer.current.type].pauseVideo();
@@ -412,6 +429,8 @@
         playList: [],
         // auto fetch play list.
         playListClass: null,
+        repeat: false,
+        repeatAll: false,
         width: 640,
         height: 480,
         autoplay: true,

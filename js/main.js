@@ -15,6 +15,18 @@ $(function() {
             case 'next':
                 $.ovoplayer.next();
                 break;
+            case 'repeat':
+                var val = $(this).data('val');
+                if (val == '1') {
+                    $(this).data('val', '0');
+                    $(this).text('no repeat');
+                    $.ovoplayer.repeat(true);
+                } else {
+                    $(this).data('val', '1');
+                    $(this).text('repeat');
+                    $.ovoplayer.repeat(false);
+                }
+                break;
         }
     });
     $(document).on('click', '.play_list', function(e) {
