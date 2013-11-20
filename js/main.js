@@ -12,6 +12,12 @@ $(function() {
             case 'seek':
                 $.ovoplayer.seek(50);
                 break;
+            case 'first':
+                $.ovoplayer.first();
+                break;
+            case 'last':
+                $.ovoplayer.last();
+                break;
             case 'next':
                 $.ovoplayer.next();
                 break;

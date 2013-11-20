@@ -348,6 +348,28 @@
         $.fn.ovoplayer.settings.repeatAll = repeat;
     };
 
+    $.fn.ovoplayer.first = function() {
+        var first;
+        if (!$.fn.ovoplayer.settings.playList || $.fn.ovoplayer.settings.playList.length == 0) {
+            return;
+        }
+
+        $.fn.ovoplayer.settings.playListIndex = 1;
+        first = $.fn.ovoplayer.settings.playList[($.fn.ovoplayer.settings.playListIndex - 1)];
+        $.fn.ovoplayer.update(first);
+    };
+
+    $.fn.ovoplayer.last = function() {
+        var last;
+        if (!$.fn.ovoplayer.settings.playList || $.fn.ovoplayer.settings.playList.length == 0) {
+            return;
+        }
+
+        $.fn.ovoplayer.settings.playListIndex = $.fn.ovoplayer.settings.playList.length;
+        last = $.fn.ovoplayer.settings.playList[($.fn.ovoplayer.settings.playListIndex - 1)];
+        $.fn.ovoplayer.update(last);
+    };
+
     $.fn.ovoplayer.previous = function() {
         var previous, obj;
         if (!$.fn.ovoplayer.settings.playList || $.fn.ovoplayer.settings.playList.length == 0) {
@@ -447,7 +469,7 @@
         if (o.playListClass && o.playListClass.length > 0) {
             $('.' + o.playListClass).each(function(index) {
                 type = $(this).data('type');
-                code = $(this).data('code');
+                code = $(this).data('code').toString();
                 if (type && code && type.length > 0 && code.length > 0) {
                     obj = {
                         type: type,
