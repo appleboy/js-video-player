@@ -346,7 +346,6 @@
             return;
         }
 
-        console.log($.fn.ovoplayer.settings.repeat);
         if ($.fn.ovoplayer.settings.repeat) {
             obj = {
                 type: ovoplayer.current.type,
