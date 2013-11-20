@@ -297,7 +297,7 @@
             this.player.api('setVolume', volume);
         },
         updateVideo: function(setting) {
-            var iframe = '<iframe id="' + this.options.vimeoPlayer + '" src="//player.vimeo.com/video/' + setting.code + '?api=1&amp;player_id=' + this.options.vimeoPlayer + '" autoplay="true" width="' + this.options.width + '" height="' + this.options.height + '" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>';
+            var iframe = '<iframe id="' + this.options.vimeoPlayer + '" src="//player.vimeo.com/video/' + setting.code + '?api=1&amp;player_id=' + this.options.vimeoPlayer + '" width="' + this.options.width + '" height="' + this.options.height + '" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>';
             $('#' + this.options.frame_id.vimeo).html(iframe);
         },
         init: function() {
@@ -374,7 +374,7 @@
         $.each(o.frame_id, function(key, value) {
             $('<div/>', {
                 id: value,
-                class: o.iframeClass,
+                class: o.iframeClass
             }).appendTo('#' + o.id);
             // new video player function
             player[key] = new ovoplayer[key]
