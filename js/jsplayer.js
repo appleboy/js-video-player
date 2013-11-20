@@ -56,6 +56,7 @@
             }
         },
         onPlayerReady: function(e) {
+            log('Player Ready');
             if ($.fn.ovoplayer.settings.autoplay) {
                 e.target.playVideo();
             }
@@ -109,6 +110,7 @@
             }
             if (this.player) {
                 this.player.loadVideoById(options);
+                this.playVideo();
             } else {
                 this.options = setting;
                 this.init();
