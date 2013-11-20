@@ -340,6 +340,14 @@
         player[ovoplayer.current.type].seekTo(seconds);
     };
 
+    $.fn.ovoplayer.repeat = function(repeat) {
+        $.fn.ovoplayer.settings.repeat = repeat;
+    };
+
+    $.fn.ovoplayer.repeatAll = function(repeat) {
+        $.fn.ovoplayer.settings.repeatAll = repeat;
+    };
+
     $.fn.ovoplayer.previous = function() {
         var previous, obj;
         if (!$.fn.ovoplayer.settings.playList || $.fn.ovoplayer.settings.playList.length == 0) {
@@ -393,19 +401,16 @@
         }
 
         if ($.fn.ovoplayer.settings.playListIndex > $.fn.ovoplayer.settings.playList.length) {
-            $.fn.ovoplayer.settings.playListIndex = $.fn.ovoplayer.settings.playList.length;
+            if ($.fn.ovoplayer.settings.repeatAll) {
+                $.fn.ovoplayer.settings.playListIndex = 1;
+            } else {
+                log('The latest video of Play List.');
+                return;
+            }
         }
 
         next = $.fn.ovoplayer.settings.playList[($.fn.ovoplayer.settings.playListIndex - 1)];
         $.fn.ovoplayer.update(next);
-    };
-
-    $.fn.ovoplayer.repeat = function(repeat) {
-        $.fn.ovoplayer.settings.repeat = repeat;
-    };
-
-    $.fn.ovoplayer.repeatAll = function(repeat) {
-        $.fn.ovoplayer.settings.repeatAll = repeat;
     };
 
     $.fn.ovoplayer.update = function (settings) {
