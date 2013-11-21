@@ -61,6 +61,11 @@
                 e.target.playVideo();
             }
         },
+        destroy: function() {
+            log('remove youtube player');
+            this.player.destroy();
+            this.player = undefined;
+        },
         stopVideo: function() {
             this.player.stopVideo();
         },
@@ -95,6 +100,17 @@
             // small, medium, large, hd720, hd1080, highres or default
             this.player.setPlaybackQuality(quality);
         },
+        initPlayer: function() {
+            log('initial youtube player');
+            this.player = new YT.Player(this.options.frame_id.youtube, {
+                width: this.options.width,
+                height: this.options.height,
+                videoId: this.options.code,
+            });
+            this.player.addEventListener('onReady', this.onPlayerReady);
+            this.player.addEventListener('onStateChange', this.onPlayerStateChange);
+            this.player.addEventListener('onError', this.onError);
+        },
         updateVideo: function(setting) {
             var options = {
                 videoId: setting.code,
@@ -118,13 +134,16 @@
         },
         init: function() {
             var e, s, url = 'https://www.youtube.com/iframe_api';
-            if (this.is_init) return;
-            e = document.createElement('script');
-            e.src = url;
-            e.async = true;
-            s = document.getElementsByTagName('script')[0];
-            s.parentNode.insertBefore(e, s);
-            this.is_init = true;
+            if (this.is_init) {
+                this.initPlayer();
+            } else {
+                e = document.createElement('script');
+                e.src = url;
+                e.async = true;
+                s = document.getElementsByTagName('script')[0];
+                s.parentNode.insertBefore(e, s);
+                this.is_init = true;
+            }
         }
     });
 
@@ -177,6 +196,7 @@
         onSeeked: function(e) {
             log('Event is onSeeked');
         },
+        destroy: function() {},
         playVideo: function() {
             this.player.play();
         },
@@ -257,6 +277,7 @@
         onSeek: function(e) {
             log('on onSeek');
         },
+        destroy: function() {},
         playVideo: function() {
             this.player.api('play');
         },
@@ -326,8 +347,8 @@
         }
     });
 
-    var set_current_data = function () {
-        ovoplayer.current = $.fn.ovoplayer.settings;
+    var set_current_data = function (settings) {
+        ovoplayer.current = settings;
     }
 
     $.fn.ovoplayer = function (settings) {
@@ -447,6 +468,8 @@
         // pause current video
         player[ovoplayer.current.type].pauseVideo();
         if (o.type != ovoplayer.current.type) {
+            // remove iframe
+            player[ovoplayer.current.type].destroy();
             // hide all video frame
             $('.' + o.iframeClass).hide();
             // show current video frame
@@ -454,7 +477,7 @@
         }
 
         player[o.type].updateVideo(o);
-        set_current_data();
+        set_current_data(o);
     };
 
     $.fn.ovoplayer.init = function(options) {
@@ -485,7 +508,7 @@
                 }
             });
         }
-        set_current_data();
+        set_current_data(o);
     };
 
     // Defaults
