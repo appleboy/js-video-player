@@ -103,6 +103,7 @@
             this.player.setPlaybackQuality(quality);
         },
         initPlayer: function() {
+            var self = this;
             this.player = new YT.Player(this.options.frame_id.youtube, {
                 width: this.options.width,
                 height: this.options.height,
@@ -113,6 +114,13 @@
             this.player.addEventListener('onReady', this.onPlayerReady);
             this.player.addEventListener('onStateChange', this.onPlayerStateChange);
             this.player.addEventListener('onError', this.onError);
+
+            // fixed Unable to post message to https://www.youtube.com.
+            // ref: https://code.google.com/p/gdata-issues/issues/detail?id=4697
+            setTimeout(function(){
+                var new_src = $('#' + self.options.frame_id.youtube).prop('src');
+                $('#' + self.options.frame_id.youtube).prop('src', new_src.replace(/^http:\/\//i, 'https://'));
+            }, 1000);
         },
         updateVideo: function(setting) {
             var options = {
@@ -367,6 +375,7 @@
             // for IE solution.
             var iframe = document.getElementById(this.options.vimeoPlayer);
             if(iframe.addEventListener) {
+                // for chrome, firefox
                 iframe.addEventListener('load', function() {
                     $f(document.getElementById(self.options.vimeoPlayer)).addEvent('ready', onApiReady);
                 }, false);

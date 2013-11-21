@@ -70,8 +70,8 @@ $(function() {
     });
 
     $.ovoplayer({
-        type: 'vimeo',
-        code: '68116854',
+        type: 'youtube',
+        code: 'xWzlwGVQ6_Q',
         playListClass: 'play_list'
         /*
         playList: playList
