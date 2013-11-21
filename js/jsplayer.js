@@ -27,7 +27,8 @@
                 self.player = new YT.Player(self.options.frame_id.youtube, {
                     width: self.options.width,
                     height: self.options.height,
-                    videoId: self.options.code,
+                    videoId: self.options.code
+                    //playerVars: { 'autoplay': 1, 'controls': 0 }
                 });
                 self.player.addEventListener('onReady', self.onPlayerReady);
                 self.player.addEventListener('onStateChange', self.onPlayerStateChange);
@@ -102,12 +103,13 @@
             this.player.setPlaybackQuality(quality);
         },
         initPlayer: function() {
-            log('initial youtube player');
             this.player = new YT.Player(this.options.frame_id.youtube, {
                 width: this.options.width,
                 height: this.options.height,
-                videoId: this.options.code,
+                videoId: this.options.code
+                //playerVars: { 'autoplay': 1, 'controls': 0 }
             });
+
             this.player.addEventListener('onReady', this.onPlayerReady);
             this.player.addEventListener('onStateChange', this.onPlayerStateChange);
             this.player.addEventListener('onError', this.onError);
@@ -278,7 +280,9 @@
         onSeek: function(e) {
             log('on onSeek');
         },
-        destroy: function() {},
+        destroy: function() {
+            $('#' + this.options.frame_id.vimeo).html('');
+        },
         playVideo: function() {
             this.player.api('play');
         },
@@ -325,8 +329,25 @@
             this.player.api('setVolume', volume);
         },
         updateVideo: function(setting) {
-            var iframe = '<iframe id="' + this.options.vimeoPlayer + '" src="//player.vimeo.com/video/' + setting.code + '?api=1&amp;player_id=' + this.options.vimeoPlayer + '" width="' + this.options.width + '" height="' + this.options.height + '" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>';
-            $('#' + this.options.frame_id.vimeo).html(iframe);
+            if (this.player) {
+                var iframe = '<iframe id="' + this.options.vimeoPlayer + '" src="//player.vimeo.com/video/' + setting.code + '?api=1&amp;player_id=' + this.options.vimeoPlayer + '" width="' + this.options.width + '" height="' + this.options.height + '" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>';
+                $('#' + this.options.frame_id.vimeo).html(iframe);
+            } else {
+                this.init();
+            }
+        },
+        loadJS: function (src, callback) {
+            var e, s = document.createElement('script');
+            s.src = src;
+            s.async = true;
+            s.onreadystatechange = s.onload = function() {
+                var state = s.readyState;
+                if (!callback.done && (!state || /loaded|complete/.test(state))) {
+                    callback.done = true;
+                    callback();
+                }
+            };
+            document.getElementsByTagName('head')[0].appendChild(s);
         },
         init: function() {
             var e, s, url = 'http://a.vimeocdn.com/js/froogaloop2.min.js?938a9-1384184538';
@@ -337,10 +358,26 @@
             e.async = true;
             s = document.getElementsByTagName('script')[0];
             s.parentNode.insertBefore(e, s);
+            this.options = $.fn.ovoplayer.settings;
             this.is_init = true;
 
-            var iframe = '<iframe id="' + this.options.vimeoPlayer + '" src="//player.vimeo.com/video/' + this.options.code + '?api=1&amp;player_id=' + this.options.vimeoPlayer + '" width="' + this.options.width + '" height="' + this.options.height + '" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>';
-            $('#' + this.options.frame_id.vimeo).html(iframe);
+            var iframe_html = '<iframe id="' + this.options.vimeoPlayer + '" src="//player.vimeo.com/video/' + this.options.code + '?api=1&amp;player_id=' + this.options.vimeoPlayer + '" width="' + this.options.width + '" height="' + this.options.height + '" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>';
+            $('#' + this.options.frame_id.vimeo).html(iframe_html);
+
+            // for IE solution.
+            var iframe = document.getElementById(this.options.vimeoPlayer);
+            if(iframe.addEventListener) {
+                iframe.addEventListener('load', function() {
+                    $f(document.getElementById(self.options.vimeoPlayer)).addEvent('ready', onApiReady);
+                }, false);
+            } else if(iframe.attachEvent) {
+                // for IE 8
+                iframe.attachEvent('onload', function() {
+                    setTimeout(function(){
+                        $f(document.getElementById(self.options.vimeoPlayer)).addEvent('ready', onApiReady);
+                    }, 2000);
+                });
+            }
 
             addEvent('load', function() {
                 $f(document.getElementById(self.options.vimeoPlayer)).addEvent('ready', onApiReady);

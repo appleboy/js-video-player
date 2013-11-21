@@ -76,11 +76,11 @@ $(function() {
         /*
         playList: playList
         type: 'vimeo',
-        code: '68116854'
+        code: '68116854',
         type: 'dailymotion',
-        code: 'xrs3bh'
+        code: 'xrs3bh',
         type: 'youtube',
-        code: 'xWzlwGVQ6_Q'
+        code: 'xWzlwGVQ6_Q',
         */
     });
 });
