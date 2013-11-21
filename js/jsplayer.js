@@ -1,9 +1,10 @@
 (function ($, window, document) {
     "use strict";
     var ovoplayer = {}, player = {},
+    addEvent =  window.attachEvent || window.addEventListener,
     nativeIsArray = Array.isArray,
     isArray = nativeIsArray || function(obj) {
-        return toString.call(obj) == '[object Array]';
+        return Object.prototype.toString.call(obj) == '[object Array]';
     },
     log = function(message) {
         if (!$.fn.ovoplayer.settings.debug) {
@@ -341,7 +342,7 @@
             var iframe = '<iframe id="' + this.options.vimeoPlayer + '" src="//player.vimeo.com/video/' + this.options.code + '?api=1&amp;player_id=' + this.options.vimeoPlayer + '" width="' + this.options.width + '" height="' + this.options.height + '" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>';
             $('#' + this.options.frame_id.vimeo).html(iframe);
 
-            window.addEventListener('load', function() {
+            addEvent('load', function() {
                 $f(document.getElementById(self.options.vimeoPlayer)).addEvent('ready', onApiReady);
             });
         }
@@ -487,7 +488,7 @@
         $.each(o.frame_id, function(key, value) {
             $('<div/>', {
                 id: value,
-                class: o.iframeClass
+                'class': o.iframeClass
             }).appendTo('#' + o.id);
             // new video player function
             player[key] = new ovoplayer[key]
