@@ -118,8 +118,11 @@
             // fixed Unable to post message to https://www.youtube.com.
             // ref: https://code.google.com/p/gdata-issues/issues/detail?id=4697
             setTimeout(function(){
-                var new_src = $('#' + self.options.frame_id.youtube).prop('src');
-                $('#' + self.options.frame_id.youtube).prop('src', new_src.replace(/^http:\/\//i, 'https://'));
+                var url = $('#' + self.options.frame_id.youtube).prop('src');
+                if (url.match('^http://')) {
+                    log('detect youtube url protocol http://');
+                    $('#' + self.options.frame_id.youtube).prop('src', url.replace(/^http:\/\//i, 'https://'));
+                }
             }, 1000);
         },
         updateVideo: function(setting) {
