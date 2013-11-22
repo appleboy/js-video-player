@@ -1,6 +1,8 @@
 (function ($, window, document) {
     "use strict";
     var ovoplayer = {}, player = {},
+    // only support youtube, dailymotion, vimeo
+    re = /^(youtube|dailymotion|vimeo)$/,
     addEvent =  window.attachEvent || window.addEventListener,
     nativeIsArray = Array.isArray,
     isArray = nativeIsArray || function(obj) {
@@ -123,7 +125,7 @@
                     log('detect youtube url protocol http://');
                     $('#' + self.options.frame_id.youtube).prop('src', url.replace(/^http:\/\//i, 'https://'));
                 }
-            }, 1000);
+            }, 500);
         },
         updateVideo: function(setting) {
             var options = {
@@ -549,7 +551,7 @@
             $('.' + o.playListClass).each(function(index) {
                 type = $(this).data('type');
                 code = $(this).data('code').toString();
-                if (type && code && type.length > 0 && code.length > 0) {
+                if (type && code && type.match(re) && code.length > 0) {
                     obj = {
                         type: type,
                         code: code
