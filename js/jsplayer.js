@@ -407,8 +407,10 @@
         $.fn.ovoplayer.init(settings);
     };
 
-    $.fn.ovoplayer.pause = function() {
+    $.fn.ovoplayer.pause = function(callback) {
+        var self = this;
         player[ovoplayer.current.type].pauseVideo();
+        callback && callback.call(self, ovoplayer);
     };
 
     $.fn.ovoplayer.play = function() {
@@ -554,7 +556,8 @@
                 if (type && code && type.match(re) && code.length > 0) {
                     obj = {
                         type: type,
-                        code: code
+                        code: code,
+                        item: this
                     }
                     o.playList.push(obj);
                 }

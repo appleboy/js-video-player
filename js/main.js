@@ -7,7 +7,11 @@ $(function() {
                 $.ovoplayer.play();
                 break;
             case 'pause':
-                $.ovoplayer.pause();
+                $.ovoplayer.pause(function(player){
+                    if (player.current.item) {
+                        $(player.current.item).css('background-color', 'yellow');
+                    }
+                });
                 break;
             case 'seek':
                 $.ovoplayer.seek(50);
