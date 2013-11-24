@@ -534,8 +534,8 @@
         }
 
         player[o.type].updateVideo(o);
-        callback && callback.call(this, ovoplayer);
         set_current_data(o);
+        callback && callback.call(this, ovoplayer);
     };
 
     $.fn.ovoplayer.init = function(options) {
