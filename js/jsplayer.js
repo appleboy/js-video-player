@@ -408,28 +408,31 @@
     };
 
     $.fn.ovoplayer.pause = function(callback) {
-        var self = this;
         player[ovoplayer.current.type].pauseVideo();
-        callback && callback.call(self, ovoplayer);
+        callback && callback.call(this, ovoplayer);
     };
 
-    $.fn.ovoplayer.play = function() {
+    $.fn.ovoplayer.play = function(callback) {
         player[ovoplayer.current.type].playVideo();
+        callback && callback.call(this, ovoplayer);
     };
 
-    $.fn.ovoplayer.seek = function(seconds) {
+    $.fn.ovoplayer.seek = function(seconds, callback) {
         player[ovoplayer.current.type].seekTo(seconds);
+        callback && callback.call(this, ovoplayer);
     };
 
-    $.fn.ovoplayer.repeat = function(repeat) {
+    $.fn.ovoplayer.repeat = function(repeat, callback) {
         $.fn.ovoplayer.settings.repeat = repeat;
+        callback && callback.call(this, ovoplayer);
     };
 
-    $.fn.ovoplayer.repeatAll = function(repeat) {
+    $.fn.ovoplayer.repeatAll = function(repeat, callback) {
         $.fn.ovoplayer.settings.repeatAll = repeat;
+        callback && callback.call(this, ovoplayer);
     };
 
-    $.fn.ovoplayer.first = function() {
+    $.fn.ovoplayer.first = function(callback) {
         var first;
         if (!isArray($.fn.ovoplayer.settings.playList) || $.fn.ovoplayer.settings.playList.length == 0) {
             return;
@@ -437,10 +440,10 @@
 
         $.fn.ovoplayer.settings.playListIndex = 1;
         first = $.fn.ovoplayer.settings.playList[($.fn.ovoplayer.settings.playListIndex - 1)];
-        $.fn.ovoplayer.update(first);
+        $.fn.ovoplayer.update(first, callback);
     };
 
-    $.fn.ovoplayer.last = function() {
+    $.fn.ovoplayer.last = function(callback) {
         var last;
         if (!isArray($.fn.ovoplayer.settings.playList) || $.fn.ovoplayer.settings.playList.length == 0) {
             return;
@@ -448,10 +451,10 @@
 
         $.fn.ovoplayer.settings.playListIndex = $.fn.ovoplayer.settings.playList.length;
         last = $.fn.ovoplayer.settings.playList[($.fn.ovoplayer.settings.playListIndex - 1)];
-        $.fn.ovoplayer.update(last);
+        $.fn.ovoplayer.update(last, callback);
     };
 
-    $.fn.ovoplayer.previous = function() {
+    $.fn.ovoplayer.previous = function(callback) {
         var previous, obj;
         if (!isArray($.fn.ovoplayer.settings.playList) || $.fn.ovoplayer.settings.playList.length == 0) {
             return;
@@ -463,7 +466,7 @@
                 type: ovoplayer.current.type,
                 code: ovoplayer.current.code
             }
-            $.fn.ovoplayer.update(obj);
+            $.fn.ovoplayer.update(obj, callback);
             return;
         }
 
@@ -478,10 +481,10 @@
         }
 
         previous = $.fn.ovoplayer.settings.playList[($.fn.ovoplayer.settings.playListIndex - 1)];
-        $.fn.ovoplayer.update(previous);
+        $.fn.ovoplayer.update(previous, callback);
     };
 
-    $.fn.ovoplayer.next = function() {
+    $.fn.ovoplayer.next = function(callback) {
         var next, obj;
         if (!isArray($.fn.ovoplayer.settings.playList) || $.fn.ovoplayer.settings.playList.length == 0) {
             return;
@@ -493,7 +496,7 @@
                 type: ovoplayer.current.type,
                 code: ovoplayer.current.code
             }
-            $.fn.ovoplayer.update(obj);
+            $.fn.ovoplayer.update(obj, callback);
             return;
         }
 
@@ -513,10 +516,10 @@
         }
 
         next = $.fn.ovoplayer.settings.playList[($.fn.ovoplayer.settings.playListIndex - 1)];
-        $.fn.ovoplayer.update(next);
+        $.fn.ovoplayer.update(next, callback);
     };
 
-    $.fn.ovoplayer.update = function (settings) {
+    $.fn.ovoplayer.update = function (settings, callback) {
         var o = $.fn.ovoplayer.settings = $.extend({}, $.fn.ovoplayer.settings, settings);
 
         // pause current video
@@ -531,6 +534,7 @@
         }
 
         player[o.type].updateVideo(o);
+        callback && callback.call(this, ovoplayer);
         set_current_data(o);
     };
 
