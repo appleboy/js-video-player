@@ -12,7 +12,7 @@
         if (!$.fn.ovoplayer.settings.debug) {
             return;
         }
-        console.log(message);
+        window.console && console.log(message);
     };
 
     ovoplayer.youtube = function() {
