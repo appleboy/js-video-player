@@ -4,12 +4,18 @@ $(function() {
         var type = $(this).data('type');
         switch (type) {
             case 'play':
-                $.ovoplayer.play();
+                $.ovoplayer.play(function(player){
+                    $('.play_list').removeClass('active');
+                    if (player.current.item) {
+                        $(player.current.item).addClass('active');
+                    }
+                });
                 break;
             case 'pause':
                 $.ovoplayer.pause(function(player){
+                    $('.play_list').removeClass('active');
                     if (player.current.item) {
-                        $(player.current.item).css('background-color', 'yellow');
+                        $(player.current.item).addClass('active');
                     }
                 });
                 break;
@@ -17,16 +23,36 @@ $(function() {
                 $.ovoplayer.seek(50);
                 break;
             case 'first':
-                $.ovoplayer.first();
+                $.ovoplayer.first(function(player){
+                    $('.play_list').removeClass('active');
+                    if (player.current.item) {
+                        $(player.current.item).addClass('active');
+                    }
+                });
                 break;
             case 'last':
-                $.ovoplayer.last();
+                $.ovoplayer.last(function(player){
+                    $('.play_list').removeClass('active');
+                    if (player.current.item) {
+                        $(player.current.item).addClass('active');
+                    }
+                });
                 break;
             case 'next':
-                $.ovoplayer.next();
+                $.ovoplayer.next(function(player){
+                    $('.play_list').removeClass('active');
+                    if (player.current.item) {
+                        $(player.current.item).addClass('active');
+                    }
+                });
                 break;
             case 'previous':
-                $.ovoplayer.previous();
+                $.ovoplayer.previous(function(player){
+                    $('.play_list').removeClass('active');
+                    if (player.current.item) {
+                        $(player.current.item).addClass('active');
+                    }
+                });
                 break;
             case 'repeat':
                 var val = $(this).data('val');
