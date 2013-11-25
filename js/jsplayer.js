@@ -535,6 +535,11 @@
 
         player[o.type].updateVideo(o);
         set_current_data(o);
+
+        // overwrite callback.
+        if (o.callback) {
+            callback = o.callback;
+        }
         callback && callback.call(this, ovoplayer);
     };
 
@@ -589,7 +594,8 @@
         width: 640,
         height: 480,
         autoplay: true,
-        debug: false
+        debug: false,
+        callback: null
     };
 
     $.ovoplayer = $.fn.ovoplayer;

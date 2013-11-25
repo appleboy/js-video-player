@@ -4,55 +4,25 @@ $(function() {
         var type = $(this).data('type');
         switch (type) {
             case 'play':
-                $.ovoplayer.play(function(player){
-                    $('.play_list').removeClass('active');
-                    if (player.current.item) {
-                        $(player.current.item).addClass('active');
-                    }
-                });
+                $.ovoplayer.play();
                 break;
             case 'pause':
-                $.ovoplayer.pause(function(player){
-                    $('.play_list').removeClass('active');
-                    if (player.current.item) {
-                        $(player.current.item).addClass('active');
-                    }
-                });
+                $.ovoplayer.pause();
                 break;
             case 'seek':
                 $.ovoplayer.seek(50);
                 break;
             case 'first':
-                $.ovoplayer.first(function(player){
-                    $('.play_list').removeClass('active');
-                    if (player.current.item) {
-                        $(player.current.item).addClass('active');
-                    }
-                });
+                $.ovoplayer.first();
                 break;
             case 'last':
-                $.ovoplayer.last(function(player){
-                    $('.play_list').removeClass('active');
-                    if (player.current.item) {
-                        $(player.current.item).addClass('active');
-                    }
-                });
+                $.ovoplayer.last();
                 break;
             case 'next':
-                $.ovoplayer.next(function(player){
-                    $('.play_list').removeClass('active');
-                    if (player.current.item) {
-                        $(player.current.item).addClass('active');
-                    }
-                });
+                $.ovoplayer.next();
                 break;
             case 'previous':
-                $.ovoplayer.previous(function(player){
-                    $('.play_list').removeClass('active');
-                    if (player.current.item) {
-                        $(player.current.item).addClass('active');
-                    }
-                });
+                $.ovoplayer.previous();
                 break;
             case 'repeat':
                 var val = $(this).data('val');
@@ -102,7 +72,13 @@ $(function() {
     $.ovoplayer({
         type: 'youtube',
         code: 'xWzlwGVQ6_Q',
-        playListClass: 'play_list'
+        playListClass: 'play_list',
+        callback: function(player) {
+            $('.play_list').removeClass('active');
+            if (player.current.item) {
+                $(player.current.item).addClass('active');
+            }
+        }
         /*
         playList: playList
         type: 'vimeo',
