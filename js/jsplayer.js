@@ -575,7 +575,17 @@
                 }
                 $.fn.ovoplayer.settings.playList.push(obj);
             }
+
+            if (type == ovoplayer.current.type && code == ovoplayer.current.code) {
+                ovoplayer.current.item = this;
+                $.fn.ovoplayer.settings.playListIndex = (index + 1);
+            }
         });
+
+        // overwrite callback.
+        if ($.fn.ovoplayer.settings.callback) {
+            callback = $.fn.ovoplayer.settings.callback;
+        }
 
         callback && callback.call(this, ovoplayer);
     };
