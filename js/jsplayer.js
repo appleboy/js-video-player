@@ -524,7 +524,17 @@
     };
 
     $.fn.ovoplayer.update = function (settings, callback) {
-        var o = $.fn.ovoplayer.settings = $.extend({}, $.fn.ovoplayer.settings, settings);
+        var i = 0, len, o = $.fn.ovoplayer.settings = $.extend({}, $.fn.ovoplayer.settings, settings);
+
+        // set current item object
+        if ($.fn.ovoplayer.settings.playList.length > 0 && !settings.item) {
+            for (i = 0, len = $.fn.ovoplayer.settings.playList.length; i < len; i++) {
+                if ($.fn.ovoplayer.settings.playList[i].code == settings.code &&
+                    $.fn.ovoplayer.settings.playList[i].type == settings.type) {
+                    o.item = $.fn.ovoplayer.settings.playList[i].item;
+                }
+            }
+        }
 
         // pause current video
         player[ovoplayer.current.type].pauseVideo();
