@@ -27,24 +27,20 @@ $(function() {
             case 'repeat':
                 var val = $(this).data('val');
                 if (val == '1') {
-                    $(this).data('val', '0');
-                    $(this).text('No Repeat');
+                    $(this).data('val', '0').text('No Repeat');
                     $.ovoplayer.repeat(true);
                 } else {
-                    $(this).data('val', '1');
-                    $(this).text('Repeat');
+                    $(this).data('val', '1').text('Repeat');
                     $.ovoplayer.repeat(false);
                 }
                 break;
             case 'repeatAll':
                 var val = $(this).data('val');
                 if (val == '1') {
-                    $(this).data('val', '0');
-                    $(this).text('No Repeat All');
+                    $(this).data('val', '0').text('No Repeat All');
                     $.ovoplayer.repeatAll(true);
                 } else {
-                    $(this).data('val', '1');
-                    $(this).text('Repeat All');
+                    $(this).data('val', '1').text('Repeat All');
                     $.ovoplayer.repeatAll(false);
                 }
                 break;
