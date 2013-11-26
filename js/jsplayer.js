@@ -558,6 +558,28 @@
         callback && callback.call(this, ovoplayer);
     };
 
+    $.fn.ovoplayer.setplayListID = function(id, callback) {
+        var type, code, obj = {};
+        if (!id) {
+            return;
+        }
+
+        $(id).each(function(index) {
+            type = $(this).data('type');
+            code = $(this).data('code').toString();
+            if (type && code && type.match(re) && code.length > 0) {
+                obj = {
+                    type: type,
+                    code: code,
+                    item: this
+                }
+                $.fn.ovoplayer.settings.playList.push(obj);
+            }
+        });
+
+        callback && callback.call(this, ovoplayer);
+    };
+
     $.fn.ovoplayer.init = function(options) {
         // Apply any options to the settings, override the defaults
         var type, code, obj, ovo = [], params, iframe, o = $.fn.ovoplayer.settings = $.extend({}, $.fn.ovoplayer.defaults, options);
@@ -573,8 +595,8 @@
         // load third party script.
         player[o.type].init();
         // load play list.
-        if (o.playListClass && o.playListClass.length > 0) {
-            $('.' + o.playListClass).each(function(index) {
+        if (o.playListID && o.playListID.length > 0) {
+            $(o.playListID).each(function(index) {
                 type = $(this).data('type');
                 code = $(this).data('code').toString();
                 if (type && code && type.match(re) && code.length > 0) {
@@ -603,7 +625,7 @@
         // user define play list.
         playList: [],
         // auto fetch play list.
-        playListClass: null,
+        playListID: null,
         repeat: false,
         repeatAll: false,
         width: 640,

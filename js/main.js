@@ -68,7 +68,7 @@ $(function() {
     $.ovoplayer({
         type: 'youtube',
         code: 'xWzlwGVQ6_Q',
-        playListClass: 'play_list',
+        //playListID: '.play_list',
         callback: function(player) {
             $('.play_list').removeClass('active');
             if (player.current.item) {
@@ -85,4 +85,6 @@ $(function() {
         code: 'xWzlwGVQ6_Q',
         */
     });
+
+    $.ovoplayer.setplayListID('.play_list');
 });
