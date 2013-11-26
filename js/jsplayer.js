@@ -532,6 +532,7 @@
                 if ($.fn.ovoplayer.settings.playList[i].code == settings.code &&
                     $.fn.ovoplayer.settings.playList[i].type == settings.type) {
                     o.item = $.fn.ovoplayer.settings.playList[i].item;
+                    $.fn.ovoplayer.settings.playListIndex = (i + 1);
                 }
             }
         }
