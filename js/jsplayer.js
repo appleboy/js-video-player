@@ -403,6 +403,21 @@
         ovoplayer.current = settings;
     }
 
+    var set_current_item = function () {
+        var i, len;
+
+        // set current item object
+        if ($.fn.ovoplayer.settings.playList.length > 0) {
+            for (i = 0, len = $.fn.ovoplayer.settings.playList.length; i < len; i++) {
+                if ($.fn.ovoplayer.settings.playList[i].code == ovoplayer.current.code &&
+                    $.fn.ovoplayer.settings.playList[i].type == ovoplayer.current.type) {
+                    ovoplayer.current.item = $.fn.ovoplayer.settings.playList[i].item;
+                    $.fn.ovoplayer.settings.playListIndex = (i + 1);
+                }
+            }
+        }
+    }
+
     $.fn.ovoplayer = function (settings) {
         $.fn.ovoplayer.init(settings);
     };
@@ -526,17 +541,6 @@
     $.fn.ovoplayer.update = function (settings, callback) {
         var i = 0, len, o = $.fn.ovoplayer.settings = $.extend({}, $.fn.ovoplayer.settings, settings);
 
-        // set current item object
-        if ($.fn.ovoplayer.settings.playList.length > 0 && !settings.item) {
-            for (i = 0, len = $.fn.ovoplayer.settings.playList.length; i < len; i++) {
-                if ($.fn.ovoplayer.settings.playList[i].code == settings.code &&
-                    $.fn.ovoplayer.settings.playList[i].type == settings.type) {
-                    o.item = $.fn.ovoplayer.settings.playList[i].item;
-                    $.fn.ovoplayer.settings.playListIndex = (i + 1);
-                }
-            }
-        }
-
         // pause current video
         player[ovoplayer.current.type].pauseVideo();
         if (o.type != ovoplayer.current.type) {
@@ -549,7 +553,12 @@
         }
 
         player[o.type].updateVideo(o);
+
+        // set current setting
         set_current_data(o);
+
+        // check current video object
+        set_current_item();
 
         // overwrite callback.
         if (o.callback) {
@@ -575,12 +584,10 @@
                 }
                 $.fn.ovoplayer.settings.playList.push(obj);
             }
-
-            if (type == ovoplayer.current.type && code == ovoplayer.current.code) {
-                ovoplayer.current.item = this;
-                $.fn.ovoplayer.settings.playListIndex = (index + 1);
-            }
         });
+
+        // check current video object
+        set_current_item();
 
         // overwrite callback.
         if ($.fn.ovoplayer.settings.callback) {
