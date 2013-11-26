@@ -438,6 +438,12 @@
             return;
         }
 
+        // repeat single video.
+        if ($.fn.ovoplayer.settings.repeat) {
+            $.fn.ovoplayer.update(ovoplayer.current, callback);
+            return;
+        }
+
         $.fn.ovoplayer.settings.playListIndex = 1;
         first = $.fn.ovoplayer.settings.playList[($.fn.ovoplayer.settings.playListIndex - 1)];
         $.fn.ovoplayer.update(first, callback);
@@ -449,24 +455,26 @@
             return;
         }
 
+        // repeat single video.
+        if ($.fn.ovoplayer.settings.repeat) {
+            $.fn.ovoplayer.update(ovoplayer.current, callback);
+            return;
+        }
+
         $.fn.ovoplayer.settings.playListIndex = $.fn.ovoplayer.settings.playList.length;
         last = $.fn.ovoplayer.settings.playList[($.fn.ovoplayer.settings.playListIndex - 1)];
         $.fn.ovoplayer.update(last, callback);
     };
 
     $.fn.ovoplayer.previous = function(callback) {
-        var previous, obj;
+        var previous;
         if (!isArray($.fn.ovoplayer.settings.playList) || $.fn.ovoplayer.settings.playList.length == 0) {
             return;
         }
 
         // repeat single video.
         if ($.fn.ovoplayer.settings.repeat) {
-            obj = {
-                type: ovoplayer.current.type,
-                code: ovoplayer.current.code
-            }
-            $.fn.ovoplayer.update(obj, callback);
+            $.fn.ovoplayer.update(ovoplayer.current, callback);
             return;
         }
 
@@ -485,18 +493,14 @@
     };
 
     $.fn.ovoplayer.next = function(callback) {
-        var next, obj;
+        var next;
         if (!isArray($.fn.ovoplayer.settings.playList) || $.fn.ovoplayer.settings.playList.length == 0) {
             return;
         }
 
         // repeat single video.
         if ($.fn.ovoplayer.settings.repeat) {
-            obj = {
-                type: ovoplayer.current.type,
-                code: ovoplayer.current.code
-            }
-            $.fn.ovoplayer.update(obj, callback);
+            $.fn.ovoplayer.update(ovoplayer.current, callback);
             return;
         }
 
