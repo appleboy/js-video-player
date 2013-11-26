@@ -1,0 +1,26 @@
+{
+  "name": "ovoplayer",
+  "version": "1.0.0",
+  "homepage": "http://appleboy.github.io/js-video-player",
+  "authors": [
+    "Bo-Yi Wu <appleboy.tw@gmail.com>"
+  ],
+  "description": "Integrate Youtube, Vimeo and Dailymotion Iframe Player.",
+  "main": "js/jsplayer.js",
+  "keywords": [
+    "youtube",
+    "vimeo",
+    "dailymotion",
+    "javascript",
+    "api",
+    "player"
+  ],
+  "license": "BSD",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
