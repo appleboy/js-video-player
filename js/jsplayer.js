@@ -598,6 +598,10 @@
     };
 
     $.fn.ovoplayer.init = function(options) {
+        var width, height;
+        // detect player height
+        options.width = $(options.id).width();
+        options.height = $(options.id).height();
         // Apply any options to the settings, override the defaults
         var type, code, obj, ovo = [], params, iframe, o = $.fn.ovoplayer.settings = $.extend({}, $.fn.ovoplayer.defaults, options);
         // insert video frame
@@ -605,7 +609,7 @@
             $('<div/>', {
                 id: value,
                 'class': o.iframeClass
-            }).appendTo('#' + o.id);
+            }).appendTo(o.id);
             // new video player function
             player[key] = new ovoplayer[key]
         });
@@ -631,7 +635,7 @@
 
     // Defaults
     $.fn.ovoplayer.defaults = {
-        id: 'player_frame',
+        id: '#player_frame',
         frame_id: {
             youtube: 'youtube_frame',
             vimeo: 'vimeo_frame',
@@ -645,8 +649,6 @@
         playListID: null,
         repeat: false,
         repeatAll: false,
-        width: 640,
-        height: 480,
         autoplay: true,
         debug: false,
         callback: null

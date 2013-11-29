@@ -66,6 +66,7 @@ $(function() {
     });
 
     $.ovoplayer({
+        id: '#player_frame',
         type: 'youtube',
         code: 'xWzlwGVQ6_Q',
         //playListID: '.play_list',
