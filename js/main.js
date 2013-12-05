@@ -69,6 +69,7 @@ $(function() {
         id: '#player_frame',
         type: 'youtube',
         code: 'xWzlwGVQ6_Q',
+        //debug: true,
         //playListID: '.play_list',
         callback: function(player) {
             $('.play_list').removeClass('active');

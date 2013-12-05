@@ -34,11 +34,13 @@
                 });
                 self.player.addEventListener('onReady', self.onPlayerReady);
                 self.player.addEventListener('onStateChange', self.onPlayerStateChange);
-                self.player.addEventListener('onError', self.onError);
+                self.player.addEventListener('onError', self.onPlayerError);
             };
         },
-        onError: function(e) {
+        onPlayerError: function(e) {
             log('youtube error');
+            // auto play next video
+            $.fn.ovoplayer.next();
         },
         onPlayerStateChange: function(e) {
             /**
@@ -186,12 +188,18 @@
                 self.player.addEventListener("ended", self.onEnded);
                 self.player.addEventListener("seeking", self.onSeeking);
                 self.player.addEventListener("seeked", self.onSeeked);
+                self.player.addEventListener("error", self.onPlayerError);
             };
         },
         onApiReady: function(e) {
             if (this.options.autoplay) {
                 e.target.play();
             }
+        },
+        onPlayerError: function(e) {
+            log('dailymotion player error');
+            // auto playe next video.
+            $.fn.ovoplayer.next();
         },
         onPlaying: function(e) {
             log('Event is onPlaying');
