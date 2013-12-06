@@ -69,6 +69,7 @@ $(function() {
         id: '#player_frame',
         type: 'youtube',
         code: 'xWzlwGVQ6_Q',
+        shortcutKey: true,
         //debug: true,
         //playListID: '.play_list',
         callback: function(player) {

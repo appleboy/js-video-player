@@ -638,6 +638,25 @@
                 }
             });
         }
+
+        // support shortcut key
+        if (o.shortcutKey) {
+            $(document).keyup(function (e) {
+                switch (e.keyCode) {
+                    // left
+                    case 37:
+                        log('previous video');
+                        $.fn.ovoplayer.previous();
+                        break;
+                    // right
+                    case 39:
+                        log('next video');
+                        $.fn.ovoplayer.next();
+                        break;
+                }
+            });
+        }
+
         set_current_data(o);
     };
 
@@ -659,7 +678,8 @@
         repeatAll: false,
         autoplay: true,
         debug: false,
-        callback: null
+        callback: null,
+        shortcutKey: false
     };
 
     $.ovoplayer = $.fn.ovoplayer;
