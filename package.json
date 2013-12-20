@@ -1,0 +1,24 @@
+{
+  "name": "ovoplayer",
+  "version": "1.0.2",
+  "description": "Integrate Youtube, Vimeo, Dailymotion API Player",
+  "main": "js/jsplayer.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/appleboy/js-video-player.git"
+  },
+  "keywords": [
+    "youtube",
+    "vimeo",
+    "dailymotion",
+    "player"
+  ],
+  "author": "Bo-Yi Wu",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/appleboy/js-video-player/issues"
+  }
+}
