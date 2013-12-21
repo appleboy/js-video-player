@@ -20,5 +20,13 @@
   "license": "BSD-2-Clause",
   "bugs": {
     "url": "https://github.com/appleboy/js-video-player/issues"
+  },
+  "devDependencies": {
+    "grunt-cli": "~0.1.11",
+    "grunt-remove-logging": "~0.2.0",
+    "grunt": "~0.4.2",
+    "grunt-contrib-watch": "~0.5.3",
+    "grunt-contrib-coffee": "~0.7.0",
+    "grunt-contrib-jshint": "~0.7.2"
   }
 }
