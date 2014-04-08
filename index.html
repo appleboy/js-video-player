@@ -1,55 +1,52 @@
-<!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Javascript Video Player</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="css/main.css">
-    </head>
-    <body>
-        <!-- Add your site or application content here -->
-        <h1>Javascript Video Player</h1>
-        <p>support Youtube, Vimeo, Dailymotion.</p>
-        <div id="player_frame"></div>
-        <div class="control">
-            <button class="btn btn-primary" data-type="pause"><span class="glyphicon glyphicon-pause"></span> Pause</button>
-            <button class="btn btn-primary" data-type="play"><span class="glyphicon glyphicon-play"></span> Play</button>
-            <button class="btn btn-primary" data-type="seek">Seek to 50 seconds</button>
-            <button class="btn btn-primary" data-type="first">first</button>
-            <button class="btn btn-primary" data-type="previous">Previous</button>
-            <button class="btn btn-primary" data-type="next">Next</button>
-            <button class="btn btn-primary" data-type="last">last</button>
-            <button class="btn btn-primary" data-type="repeat" data-val="1"><span class="glyphicon glyphicon-refresh"></span> Repeat</button>
-            <button class="btn btn-primary" data-type="repeatAll" data-val="1"><span class="glyphicon glyphicon-repeat"></span> Repeat All</button>
-        </div>
-        <div id="play_list">
-            <ul>
-                <li><a href="#" class="play_list" data-type="youtube" data-code="N6vRCQqOiUw">[Youtube]〈島嶼天光〉（Island's Sunrise） 太陽花學運 動畫版</a></li>
-                <li><a href="#" class="play_list" data-type="youtube" data-code="zvUsOXNPVxo">[Youtube] 王力宏「你不知道的事」《戀愛通告》主題曲完整版MV</a></li>
-                <li><a href="#" class="play_list" data-type="youtube" data-code="UPM-FNONOLQ">[Youtube] 《楊培安》感恩的心</a></li>
-                <li><a href="#" class="play_list" data-type="youtube" data-code="QTSus-RTEkY">[Youtube] 蘇永康-相遇太早</a></li>
-                <li><a href="#" class="play_list" data-type="youtube" data-code="ZHJiMrUaxm0">[Youtube] 周杰倫超時代演唱會(HD) 開不了口</a></li>
-                <li><a href="#" class="play_list" data-type="youtube" data-code="m7c_MMD6OFA">[Youtube] 永邦-你是我最深愛的人</a></li>
-                <li><a href="#" class="play_list" data-type="youtube" data-code="M6oM_f18mbs">[Youtube] 阿杜-堅持到底</a></li>
-                <li><a href="#" class="play_list" data-type="youtube" data-code="jOcF78dru3I">[Youtube] 林依晨-翅膀(我可能不會愛你OST)-官方完整版MV</a></li>
-                <li><a href="#" class="play_list" data-type="youtube" data-code="Z-_84g0IXu8">[Youtube] 郁可唯 好朋友只是朋友</a></li>
-                <li><a href="#" class="play_list" data-type="youtube" data-code="xWzlwGVQ6_Q">[Youtube]【那些年，我們一起追的女孩】電影主題曲《那些年》官方正式MV</a></li>
-                <li><a href="#" class="play_list" data-type="vimeo" data-code="44744056">[Vimeo] Kate Upton- The Many Talents of Kate Upton</a></li>
-                <li><a href="#" class="play_list" data-type="vimeo" data-code="41393068">[Vimeo] Kate Upton- Cat Daddy</a></li>
-                <!--
-                <li><a href="#" class="play_list" data-type="dailymotion" data-code="x16rnna">[Dailymotion] 卫校女生实习被派足疗店自述称遭性骚扰</a></li>
-                <li><a href="#" class="play_list" data-type="dailymotion" data-code="x16rnxy">[Dailymotion] 张艺谋超生女首曝光-娇妻子女豪门生活解密</a></li>
-                -->
-            </ul>
-        </div>
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-        <script src="js/jsplayer.js"></script>
-        <script src="js/main.js"></script>
-    </body>
+<!doctype html>
+<html class="no-js">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Javascript Video Player</title>
+    <meta name="description" content="Integrate Youtube, Vimeo, Dailymotion API Player">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+    <!-- Add your site or application content here -->
+    <h1>Javascript Video Player</h1>
+    <p>support Youtube, Vimeo, Dailymotion.</p>
+    <div id="player_frame"></div>
+    <div class="control">
+        <button class="btn btn-primary" data-type="pause"><span class="glyphicon glyphicon-pause"></span> Pause</button>
+        <button class="btn btn-primary" data-type="play"><span class="glyphicon glyphicon-play"></span> Play</button>
+        <button class="btn btn-primary" data-type="seek">Seek to 50 seconds</button>
+        <button class="btn btn-primary" data-type="first">first</button>
+        <button class="btn btn-primary" data-type="previous">Previous</button>
+        <button class="btn btn-primary" data-type="next">Next</button>
+        <button class="btn btn-primary" data-type="last">last</button>
+        <button class="btn btn-primary" data-type="repeat" data-val="1"><span class="glyphicon glyphicon-refresh"></span> Repeat</button>
+        <button class="btn btn-primary" data-type="repeatAll" data-val="1"><span class="glyphicon glyphicon-repeat"></span> Repeat All</button>
+    </div>
+    <div id="play_list">
+        <ul>
+            <li><a href="#" class="play_list" data-type="youtube" data-code="N6vRCQqOiUw">[Youtube]〈島嶼天光〉（Island's Sunrise） 太陽花學運 動畫版</a></li>
+            <li><a href="#" class="play_list" data-type="youtube" data-code="zvUsOXNPVxo">[Youtube] 王力宏「你不知道的事」《戀愛通告》主題曲完整版MV</a></li>
+            <li><a href="#" class="play_list" data-type="youtube" data-code="UPM-FNONOLQ">[Youtube] 《楊培安》感恩的心</a></li>
+            <li><a href="#" class="play_list" data-type="youtube" data-code="QTSus-RTEkY">[Youtube] 蘇永康-相遇太早</a></li>
+            <li><a href="#" class="play_list" data-type="youtube" data-code="ZHJiMrUaxm0">[Youtube] 周杰倫超時代演唱會(HD) 開不了口</a></li>
+            <li><a href="#" class="play_list" data-type="youtube" data-code="m7c_MMD6OFA">[Youtube] 永邦-你是我最深愛的人</a></li>
+            <li><a href="#" class="play_list" data-type="youtube" data-code="M6oM_f18mbs">[Youtube] 阿杜-堅持到底</a></li>
+            <li><a href="#" class="play_list" data-type="youtube" data-code="jOcF78dru3I">[Youtube] 林依晨-翅膀(我可能不會愛你OST)-官方完整版MV</a></li>
+            <li><a href="#" class="play_list" data-type="youtube" data-code="Z-_84g0IXu8">[Youtube] 郁可唯 好朋友只是朋友</a></li>
+            <li><a href="#" class="play_list" data-type="youtube" data-code="xWzlwGVQ6_Q">[Youtube]【那些年，我們一起追的女孩】電影主題曲《那些年》官方正式MV</a></li>
+            <li><a href="#" class="play_list" data-type="vimeo" data-code="44744056">[Vimeo] Kate Upton- The Many Talents of Kate Upton</a></li>
+            <li><a href="#" class="play_list" data-type="vimeo" data-code="41393068">[Vimeo] Kate Upton- Cat Daddy</a></li>
+            <!--
+            <li><a href="#" class="play_list" data-type="dailymotion" data-code="x16rnna">[Dailymotion] 卫校女生实习被派足疗店自述称遭性骚扰</a></li>
+            <li><a href="#" class="play_list" data-type="dailymotion" data-code="x16rnxy">[Dailymotion] 张艺谋超生女首曝光-娇妻子女豪门生活解密</a></li>
+            -->
+        </ul>
+    </div>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="js/jsplayer.js"></script>
+    <script src="js/main.js"></script>
+</body>
 </html>
