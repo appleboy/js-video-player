@@ -68,7 +68,7 @@ $(function() {
     $.ovoplayer({
         id: '#player_frame',
         type: 'youtube',
-        code: 'xWzlwGVQ6_Q',
+        code: 'N6vRCQqOiUw',
         shortcutKey: true,
         //debug: true,
         //playListID: '.play_list',
