@@ -4,7 +4,8 @@
   "description": "Integrate Youtube, Vimeo, Dailymotion API Player",
   "main": "js/jsplayer.js",
   "scripts": {
-    "test": "npm test"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "gulp"
   },
   "repository": {
     "type": "git",
@@ -16,17 +17,20 @@
     "dailymotion",
     "player"
   ],
-  "author": "Bo-Yi Wu",
+  "author": {
+    "name": "Bo-Yi Wu",
+    "email": "appleboy.tw@gmail.com"
+  },
   "license": "BSD-2-Clause",
   "bugs": {
     "url": "https://github.com/appleboy/js-video-player/issues"
   },
   "devDependencies": {
-    "grunt-cli": "~0.1.11",
-    "grunt-remove-logging": "~0.2.0",
-    "grunt": "~0.4.2",
-    "grunt-contrib-watch": "~0.5.3",
-    "grunt-contrib-coffee": "~0.7.0",
-    "grunt-contrib-jshint": "~0.7.2"
+    "gulp": "^3.8.0",
+    "gulp-jshint": "^1.6.2",
+    "gulp-connect": "^2.0.5"
+  },
+  "dependencies": {
+    "coffee-script": "^1.7.1"
   }
 }
