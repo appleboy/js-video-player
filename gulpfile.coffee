@@ -19,16 +19,19 @@ gulp.task 'js', ->
     .pipe jshint.reporter 'default'
     .pipe uglify()
     .pipe gulp.dest paths.dist + '/js'
+    .pipe connect.reload()
 
 gulp.task 'css', ->
   gulp.src paths.css
     .pipe minifyCSS()
     .pipe gulp.dest paths.dist + '/css'
+    .pipe connect.reload()
 
 gulp.task 'html', ->
   gulp.src paths.html
     .pipe htmlmin()
     .pipe gulp.dest paths.dist
+    .pipe connect.reload()
 
 # connect
 gulp.task 'connect:dev', ->
@@ -45,8 +48,9 @@ gulp.task 'connect:dist', ->
 
 gulp.task 'watch', ['connect:dev', 'connect:dist'], ->
   # run tasks automatically when files change
-  gulp.watch 'js/*', ['js']
-  gulp.watch 'css/*', ['css']
+  gulp.watch paths.js, ['js']
+  gulp.watch paths.css, ['css']
+  gulp.watch paths.html, ['html']
 
 gulp.task 'build', ['js', 'css', 'html']
 

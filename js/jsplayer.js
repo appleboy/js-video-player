@@ -1,12 +1,12 @@
 (function ($, window, document) {
-  "use strict";
+  'use strict';
   var ovoplayer = {}, player = {},
   // only support youtube, dailymotion, vimeo
   re = /^(youtube|dailymotion|vimeo)$/,
   addEvent =  window.attachEvent || window.addEventListener,
   nativeIsArray = Array.isArray,
   isArray = nativeIsArray || function(obj) {
-    return Object.prototype.toString.call(obj) == '[object Array]';
+    return Object.prototype.toString.call(obj) === '[object Array]';
   },
   log = function(message) {
     if (!$.fn.ovoplayer.settings.debug) {
@@ -37,7 +37,7 @@
         self.player.addEventListener('onError', self.onPlayerError);
       };
     },
-    onPlayerError: function(e) {
+    onPlayerError: function() {
       log('youtube error');
       // auto play next video
       $.fn.ovoplayer.next();
@@ -181,14 +181,14 @@
         self.player = DM.player(self.options.frame_id.dailymotion, {video: self.options.code, width: self.options.width, height: self.options.height, params: params});
 
         // 4. We can attach some events on the player (using standard DOM events)
-        self.player.addEventListener("apiready", self.onApiReady);
-        self.player.addEventListener("playing", self.onPlaying);
-        self.player.addEventListener("playing", self.onPlay);
-        self.player.addEventListener("pause", self.onPause);
-        self.player.addEventListener("ended", self.onEnded);
-        self.player.addEventListener("seeking", self.onSeeking);
-        self.player.addEventListener("seeked", self.onSeeked);
-        self.player.addEventListener("error", self.onPlayerError);
+        self.player.addEventListener('apiready', self.onApiReady);
+        self.player.addEventListener('playing', self.onPlaying);
+        self.player.addEventListener('playing', self.onPlay);
+        self.player.addEventListener('pause', self.onPause);
+        self.player.addEventListener('ended', self.onEnded);
+        self.player.addEventListener('seeking', self.onSeeking);
+        self.player.addEventListener('seeked', self.onSeeked);
+        self.player.addEventListener('error', self.onPlayerError);
       };
     },
     onApiReady: function(e) {
@@ -196,28 +196,28 @@
         e.target.play();
       }
     },
-    onPlayerError: function(e) {
+    onPlayerError: function() {
       log('dailymotion player error');
       // auto playe next video.
       $.fn.ovoplayer.next();
     },
-    onPlaying: function(e) {
+    onPlaying: function() {
       log('Event is onPlaying');
     },
-    onPlay: function(e) {
+    onPlay: function() {
       log('Event is onPlay');
     },
-    onPause: function(e) {
+    onPause: function() {
       log('Event is onPause');
     },
-    onEnded: function(e) {
+    onEnded: function() {
       log('Event is onEnded');
       $.fn.ovoplayer.next();
     },
-    onSeeking: function(e) {
+    onSeeking: function() {
       log('Event is onSeeking');
     },
-    onSeeked: function(e) {
+    onSeeked: function() {
       log('Event is onSeeked');
     },
     destroy: function() {},
@@ -278,27 +278,27 @@
           self.player.api('play');
         }
         // add Events
-        self.player.addEvent("playProgress", self.onplayProgress);
-        self.player.addEvent("play", self.onPlay);
-        self.player.addEvent("pause", self.onPause);
-        self.player.addEvent("finish", self.onFinish);
-        self.player.addEvent("seek", self.onSeek);
+        self.player.addEvent('playProgress', self.onplayProgress);
+        self.player.addEvent('play', self.onPlay);
+        self.player.addEvent('pause', self.onPause);
+        self.player.addEvent('finish', self.onFinish);
+        self.player.addEvent('seek', self.onSeek);
       };
     },
-    onplayProgress: function(e) {
+    onplayProgress: function() {
       //log('on playProgress');
     },
-    onPlay: function(player_id) {
+    onPlay: function() {
       log('on onPlay');
     },
-    onPause: function(player_id) {
+    onPause: function() {
       log('on onPause');
     },
-    onFinish: function(player_id) {
+    onFinish: function() {
       log('on onFinish');
       $.fn.ovoplayer.next();
     },
-    onSeek: function(e) {
+    onSeek: function() {
       log('on onSeek');
     },
     destroy: function() {
@@ -417,8 +417,8 @@
     // set current item object
     if ($.fn.ovoplayer.settings.playList.length > 0) {
       for (i = 0, len = $.fn.ovoplayer.settings.playList.length; i < len; i++) {
-        if ($.fn.ovoplayer.settings.playList[i].code == ovoplayer.current.code &&
-          $.fn.ovoplayer.settings.playList[i].type == ovoplayer.current.type) {
+        if ($.fn.ovoplayer.settings.playList[i].code === ovoplayer.current.code &&
+          $.fn.ovoplayer.settings.playList[i].type === ovoplayer.current.type) {
           ovoplayer.current.item = $.fn.ovoplayer.settings.playList[i].item;
           $.fn.ovoplayer.settings.playListIndex = (i + 1);
         }
@@ -457,7 +457,7 @@
 
   $.fn.ovoplayer.first = function(callback) {
     var first;
-    if (!isArray($.fn.ovoplayer.settings.playList) || $.fn.ovoplayer.settings.playList.length == 0) {
+    if (!isArray($.fn.ovoplayer.settings.playList) || $.fn.ovoplayer.settings.playList.length === 0) {
       return;
     }
 
@@ -474,7 +474,7 @@
 
   $.fn.ovoplayer.last = function(callback) {
     var last;
-    if (!isArray($.fn.ovoplayer.settings.playList) || $.fn.ovoplayer.settings.playList.length == 0) {
+    if (!isArray($.fn.ovoplayer.settings.playList) || $.fn.ovoplayer.settings.playList.length === 0) {
       return;
     }
 
@@ -491,7 +491,7 @@
 
   $.fn.ovoplayer.previous = function(callback) {
     var previous;
-    if (!isArray($.fn.ovoplayer.settings.playList) || $.fn.ovoplayer.settings.playList.length == 0) {
+    if (!isArray($.fn.ovoplayer.settings.playList) || $.fn.ovoplayer.settings.playList.length === 0) {
       return;
     }
 
@@ -517,7 +517,7 @@
 
   $.fn.ovoplayer.next = function(callback) {
     var next;
-    if (!isArray($.fn.ovoplayer.settings.playList) || $.fn.ovoplayer.settings.playList.length == 0) {
+    if (!isArray($.fn.ovoplayer.settings.playList) || $.fn.ovoplayer.settings.playList.length === 0) {
       return;
     }
 

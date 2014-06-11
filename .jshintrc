@@ -25,6 +25,9 @@
     "beforeEach": false,
     "after": false,
     "afterEach": false,
-    "require": false
+    "require": false,
+    "$": false,
+    "document": false,
+    "YT": false
   }
 }

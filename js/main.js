@@ -1,7 +1,8 @@
 $(function() {
+  'use strict';
   var playList = [];
-  $(document).on('click', 'button', function(e) {
-    var type = $(this).data('type');
+  $(document).on('click', 'button', function() {
+    var type = $(this).data('type'), val;
     switch (type) {
       case 'play':
         $.ovoplayer.play();
@@ -25,8 +26,8 @@ $(function() {
         $.ovoplayer.previous();
         break;
       case 'repeat':
-        var val = $(this).data('val');
-        if (val == '1') {
+        val = $(this).data('val');
+        if (val === '1') {
           $(this).data('val', '0').text('No Repeat');
           $.ovoplayer.repeat(true);
         } else {
@@ -35,8 +36,8 @@ $(function() {
         }
         break;
       case 'repeatAll':
-        var val = $(this).data('val');
-        if (val == '1') {
+        val = $(this).data('val');
+        if (val === '1') {
           $(this).data('val', '0').text('No Repeat All');
           $.ovoplayer.repeatAll(true);
         } else {
@@ -57,7 +58,7 @@ $(function() {
   });
 
   // get play list
-  $('.play_list').each(function( index ) {
+  $('.play_list').each(function() {
     var obj = {
       type: $(this).data('type'),
       code: $(this).data('code')
@@ -68,7 +69,7 @@ $(function() {
   $.ovoplayer({
     id: '#player_frame',
     type: 'youtube',
-    code: 'N6vRCQqOiUw',
+    code: 'dzpMxeB0JM4',
     shortcutKey: true,
     //debug: true,
     //playListID: '.play_list',
