@@ -16,6 +16,7 @@ npm i
 #git clone $REPO --reference . -b gh-pages _public
 git clone $REPO --depth 1 -b gh-pages _public
 
+REV=`git describe --always`
 cd _public
 git fetch --depth 1 origin master:master
 git add -A .
