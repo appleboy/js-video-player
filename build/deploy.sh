@@ -14,10 +14,10 @@ npm i
 
 # XXX: use --reference when not in shallow clone
 #git clone $REPO --reference . -b gh-pages _public
-git clone $REPO --depth 1 -b gh-pages _public
+git clone $REPO --depth 1 -b gh-pages ./
 
 REV=`git describe --always`
-cd _public
+cd ./
 git fetch --depth 1 origin master:master
 git add -A .
 echo "regen for $REV" | git commit-tree `git write-tree` -p `git rev-parse HEAD` -p $REV | xargs git reset --hard
