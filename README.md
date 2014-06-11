@@ -1,6 +1,13 @@
-js-video-player
-===============
+# Js-video-player
 
-Support Dailymotion, Vimeo, Youtube IFrame API.
+> Support Youtube, Dailymotion, Vimeo IFrame API.
 
-Demo Page: http://appleboy.github.io/js-video-player
+## Getting Started
+
+To run the demo application
+
+```bash
+$ npm install && npm start
+```
+
+And then navigate to http://localhost:1337
