@@ -1,4 +1,4 @@
-# Js-video-player
+# Js-video-player [![Build Status](https://travis-ci.org/appleboy/js-video-player.svg?branch=master)](https://travis-ci.org/appleboy/js-video-player)
 
 > Support Youtube, Dailymotion, Vimeo IFrame API.
 
