@@ -1,24 +1,24 @@
 body {
-    text-align: center;
+  text-align: center;
 }
 
 #play_list {
-    margin: 0 auto;
-    text-align: left;
-    width: 640px;
+  margin: 0 auto;
+  text-align: left;
+  width: 640px;
 }
 
 #player_frame {
-    text-align: center;
-    margin: 0 auto;
-    width: 640px;
-    height: 480px;
+  text-align: center;
+  margin: 0 auto;
+  width: 640px;
+  height: 480px;
 }
 
 .control {
-    margin: 10px 0px;
+  margin: 10px 0px;
 }
 
 .active {
-    background-color: yellow;
+  background-color: yellow;
 }
