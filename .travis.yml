@@ -4,6 +4,6 @@ node_js:
   - '0.11'
 env:
   global:
-    - secure: "bsDw5Lzf+XL075JPOt4xvaxGpbuUZ9KTIsHStVVG56lTLcnJKo5e8mqIAn6wK+ID6lDVZHpTvV8MZ3WoeqqD9BCoFMXWhmrMOOn+eRjDkkN9adGktU1yctr+6Hmz5mX114F23LqsrhwGgIGlVI8iQmkEgq/inHEDAmmqkn55UiU="
+    - secure: "qRFCZh9pkgHguGAYeTC+acl7sReS7/wcEugIZvjT9nzahAwPXlFaRzhEa/P+Z/ycmAMZjR3fUHPuHR3ajgirHNC4A7MbK6Oelij8yLHIPFfxf3hdC5IUZKrWuzG5614tPU0NpsmR4EVTG8RnUpdOaVLYCmeAXZ0Y4wbtStzdHOU="
     - REPO="git@github.com:appleboy/js-video-player"
 after_success: build/after_success.sh
