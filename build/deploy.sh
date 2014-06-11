@@ -12,21 +12,11 @@ fi
 
 npm i
 
-# remove dist folder for gh-pages
-rm -rf dist
-rm -rf app/assets/css
-rm -rf app/assets/js
-
 # XXX: use --reference when not in shallow clone
 #git clone $REPO --reference . -b gh-pages _public
-git clone $REPO --depth 1 -b gh-pages dist
+git clone $REPO --depth 1 -b gh-pages _public
 
-# remove cache files
-rm -rf dist/assets/js
-
-REV=`git describe --always`
-BUILD=git-$REV ./node_modules/.bin/bower install && ./node_modules/.bin/gulp release --env production
-cd dist
+cd _public
 git fetch --depth 1 origin master:master
 git add -A .
 echo "regen for $REV" | git commit-tree `git write-tree` -p `git rev-parse HEAD` -p $REV | xargs git reset --hard
