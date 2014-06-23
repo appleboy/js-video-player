@@ -16,7 +16,7 @@
   };
 
   ovoplayer.youtube = function() {
-    this.is_init = false;
+    this.isInit = false;
     this.player = undefined;
     this.options = $.fn.ovoplayer.settings;
     this.initialize.apply(this, arguments);
@@ -152,7 +152,7 @@
     },
     init: function() {
       var e, s, url = 'https://www.youtube.com/iframe_api';
-      if (this.is_init) {
+      if (this.isInit) {
         this.initPlayer();
       } else {
         e = document.createElement('script');
@@ -160,13 +160,13 @@
         e.async = true;
         s = document.getElementsByTagName('script')[0];
         s.parentNode.insertBefore(e, s);
-        this.is_init = true;
+        this.isInit = true;
       }
     }
   });
 
   ovoplayer.dailymotion = function() {
-    this.is_init = false;
+    this.isInit = false;
     this.player = undefined;
     this.options = $.fn.ovoplayer.settings;
     this.initialize.apply(this, arguments);
@@ -252,18 +252,18 @@
     },
     init: function() {
       var e, s, url = document.location.protocol + '//api.dmcdn.net/all.js';
-      if (this.is_init) return;
+      if (this.isInit) return;
       e = document.createElement('script');
       e.src = url;
       e.async = true;
       s = document.getElementsByTagName('script')[0];
       s.parentNode.insertBefore(e, s);
-      this.is_init = true;
+      this.isInit = true;
     }
   });
 
   ovoplayer.vimeo = function() {
-    this.is_init = false;
+    this.isInit = false;
     this.player = undefined;
     this.options = $.fn.ovoplayer.settings;
     this.initialize.apply(this, arguments);
@@ -272,7 +272,7 @@
   $.extend(ovoplayer.vimeo.prototype, {
     initialize: function(){
       var self = this;
-      window.onApiReady = function(player_id) {
+      self.onApiReady = function(player_id) {
         self.player = $f(player_id);
         if (self.options.autoplay) {
           self.player.api('play');
@@ -373,14 +373,14 @@
     init: function() {
       var e, s, url = 'http://a.vimeocdn.com/js/froogaloop2.min.js?938a9-1384184538';
       var self = this;
-      if (this.is_init) return;
+      if (this.isInit) return;
       e = document.createElement('script');
       e.src = url;
       e.async = true;
       s = document.getElementsByTagName('script')[0];
       s.parentNode.insertBefore(e, s);
       this.options = $.fn.ovoplayer.settings;
-      this.is_init = true;
+      this.isInit = true;
 
       var iframe_html = '<iframe id="' + this.options.vimeoPlayer + '" src="//player.vimeo.com/video/' + this.options.code + '?api=1&amp;player_id=' + this.options.vimeoPlayer + '" width="' + this.options.width + '" height="' + this.options.height + '" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>';
       $('#' + this.options.frameID.vimeo).html(iframe_html);
@@ -390,26 +390,26 @@
       if(iframe.addEventListener) {
         // for chrome, firefox
         iframe.addEventListener('load', function() {
-          $f(document.getElementById(self.options.vimeoPlayer)).addEvent('ready', onApiReady);
+          $f(document.getElementById(self.options.vimeoPlayer)).addEvent('ready', self.onApiReady);
         }, false);
       } else if(iframe.attachEvent) {
         // for IE 8
         iframe.attachEvent('onload', function() {
           setTimeout(function(){
-            $f(document.getElementById(self.options.vimeoPlayer)).addEvent('ready', onApiReady);
+            $f(document.getElementById(self.options.vimeoPlayer)).addEvent('ready', self.onApiReady);
           }, 2000);
         });
       }
 
       addEvent('load', function() {
-        $f(document.getElementById(self.options.vimeoPlayer)).addEvent('ready', onApiReady);
+        $f(document.getElementById(self.options.vimeoPlayer)).addEvent('ready', self.onApiReady);
       });
     }
   });
 
   var set_current_data = function (settings) {
     ovoplayer.current = settings;
-  }
+  };
 
   var set_current_item = function () {
     var i, len;
@@ -424,7 +424,7 @@
         }
       }
     }
-  }
+  };
 
   $.fn.ovoplayer = function (settings) {
     $.fn.ovoplayer.init(settings);
@@ -551,7 +551,7 @@
 
     // pause current video
     player[ovoplayer.current.type].pauseVideo();
-    if (o.type != ovoplayer.current.type) {
+    if (o.type !== ovoplayer.current.type) {
       // remove iframe
       player[ovoplayer.current.type].destroy();
       // hide all video frame
@@ -589,7 +589,7 @@
           type: type,
           code: code,
           item: this
-        }
+        };
         $.fn.ovoplayer.settings.playList.push(obj);
       }
     });

@@ -20,6 +20,8 @@
     "$": false,
     "jQuery": false,
     "document": false,
-    "YT": false
+    "YT": false,
+    "DM": false,
+    "$f": false
   }
 }
