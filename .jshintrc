@@ -15,5 +15,11 @@
   "unused": "vars",
   "strict": true,
   "trailing": true,
-  "smarttabs": true
+  "smarttabs": true,
+  "globals": {
+    "$": false,
+    "jQuery": false,
+    "document": false,
+    "YT": false
+  }
 }

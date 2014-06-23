@@ -26,7 +26,7 @@
     initialize: function(){
       var self = this;
       window.onYouTubeIframeAPIReady = function () {
-        self.player = new YT.Player(self.options.frame_id.youtube, {
+        self.player = new YT.Player(self.options.frameID.youtube, {
           width: self.options.width,
           height: self.options.height,
           videoId: self.options.code
@@ -108,7 +108,7 @@
     },
     initPlayer: function() {
       var self = this;
-      this.player = new YT.Player(this.options.frame_id.youtube, {
+      this.player = new YT.Player(this.options.frameID.youtube, {
         width: this.options.width,
         height: this.options.height,
         videoId: this.options.code
@@ -122,10 +122,10 @@
       // fixed Unable to post message to https://www.youtube.com.
       // ref: https://code.google.com/p/gdata-issues/issues/detail?id=4697
       setTimeout(function(){
-        var url = $('#' + self.options.frame_id.youtube).prop('src');
+        var url = $('#' + self.options.frameID.youtube).prop('src');
         if (url.match('^http://')) {
           log('detect youtube url protocol http://');
-          $('#' + self.options.frame_id.youtube).prop('src', url.replace(/^http:\/\//i, 'https://'));
+          $('#' + self.options.frameID.youtube).prop('src', url.replace(/^http:\/\//i, 'https://'));
         }
       }, 500);
     },
@@ -178,7 +178,7 @@
       window.dmAsyncInit = function() {
         // PARAMS is a javascript object containing parameters to pass to the player if any (eg: {autoplay: 1})
         var params = (self.options.autoplay) ? {autoplay: 1} : {};
-        self.player = DM.player(self.options.frame_id.dailymotion, {video: self.options.code, width: self.options.width, height: self.options.height, params: params});
+        self.player = DM.player(self.options.frameID.dailymotion, {video: self.options.code, width: self.options.width, height: self.options.height, params: params});
 
         // 4. We can attach some events on the player (using standard DOM events)
         self.player.addEventListener('apiready', self.onApiReady);
@@ -302,7 +302,7 @@
       log('on onSeek');
     },
     destroy: function() {
-      $('#' + this.options.frame_id.vimeo).html('');
+      $('#' + this.options.frameID.vimeo).html('');
     },
     playVideo: function() {
       this.player.api('play');
@@ -352,13 +352,13 @@
     updateVideo: function(setting) {
       if (this.player) {
         var iframe = '<iframe id="' + this.options.vimeoPlayer + '" src="//player.vimeo.com/video/' + setting.code + '?api=1&amp;player_id=' + this.options.vimeoPlayer + '" width="' + this.options.width + '" height="' + this.options.height + '" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>';
-        $('#' + this.options.frame_id.vimeo).html(iframe);
+        $('#' + this.options.frameID.vimeo).html(iframe);
       } else {
         this.init();
       }
     },
     loadJS: function (src, callback) {
-      var e, s = document.createElement('script');
+      var s = document.createElement('script');
       s.src = src;
       s.async = true;
       s.onreadystatechange = s.onload = function() {
@@ -383,7 +383,7 @@
       this.is_init = true;
 
       var iframe_html = '<iframe id="' + this.options.vimeoPlayer + '" src="//player.vimeo.com/video/' + this.options.code + '?api=1&amp;player_id=' + this.options.vimeoPlayer + '" width="' + this.options.width + '" height="' + this.options.height + '" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>';
-      $('#' + this.options.frame_id.vimeo).html(iframe_html);
+      $('#' + this.options.frameID.vimeo).html(iframe_html);
 
       // for IE solution.
       var iframe = document.getElementById(this.options.vimeoPlayer);
@@ -547,7 +547,7 @@
   };
 
   $.fn.ovoplayer.update = function (settings, callback) {
-    var i = 0, len, o = $.fn.ovoplayer.settings = $.extend({}, $.fn.ovoplayer.settings, settings);
+    var o = $.fn.ovoplayer.settings = $.extend({}, $.fn.ovoplayer.settings, settings);
 
     // pause current video
     player[ovoplayer.current.type].pauseVideo();
@@ -557,7 +557,7 @@
       // hide all video frame
       $('.' + o.iframeClass).hide();
       // show current video frame
-      $('#' + o.frame_id[o.type]).show();
+      $('#' + o.frameID[o.type]).show();
     }
 
     player[o.type].updateVideo(o);
@@ -606,20 +606,19 @@
   };
 
   $.fn.ovoplayer.init = function(options) {
-    var width, height;
     // detect player height
     options.width = $(options.id).width();
     options.height = $(options.id).height();
     // Apply any options to the settings, override the defaults
-    var type, code, obj, ovo = [], params, iframe, o = $.fn.ovoplayer.settings = $.extend({}, $.fn.ovoplayer.defaults, options);
+    var type, code, obj, o = $.fn.ovoplayer.settings = $.extend({}, $.fn.ovoplayer.defaults, options);
     // insert video frame
-    $.each(o.frame_id, function(key, value) {
+    $.each(o.frameID, function(key, value) {
       $('<div/>', {
         id: value,
         'class': o.iframeClass
       }).appendTo(o.id);
       // new video player function
-      player[key] = new ovoplayer[key]
+      player[key] = new ovoplayer[key]();
     });
     // load third party script.
     player[o.type].init();
@@ -633,7 +632,7 @@
             type: type,
             code: code,
             item: this
-          }
+          };
           o.playList.push(obj);
         }
       });
@@ -663,7 +662,7 @@
   // Defaults
   $.fn.ovoplayer.defaults = {
     id: '#player_frame',
-    frame_id: {
+    frameID: {
       youtube: 'youtube_frame',
       vimeo: 'vimeo_frame',
       dailymotion: 'dailymotion_frame'
