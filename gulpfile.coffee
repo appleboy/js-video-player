@@ -36,19 +36,13 @@ gulp.task 'html', ->
 # connect
 gulp.task 'connect:dev', ->
   connect.server
-    root: './'
+    root: ['./']
     port: 1337
     livereload: true
 
-gulp.task 'connect:dist', ->
-  connect.server
-    root: 'dist'
-    port: 1338
-    livereload: true
-
-gulp.task 'watch', ['connect:dev', 'connect:dist'], ->
+gulp.task 'watch', ['connect:dev'], ->
   # run tasks automatically when files change
-  gulp.watch paths.js, ['js']
+  gulp.watch paths.scripts, ['js']
   gulp.watch paths.css, ['css']
   gulp.watch paths.html, ['html']
 
