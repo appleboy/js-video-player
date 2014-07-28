@@ -1,8 +1,6 @@
 root = true
 
 [*]
-
-# Change these settings to your own preference
 indent_style = space
 indent_size = 2
 end_of_line = lf
@@ -15,9 +13,3 @@ trim_trailing_whitespace = false
 
 [Makefile]
 indent_style = tab
-
-# We recommend you to keep these unchanged
-spaces_around_operators = true
-space_after_control_statements = true
-space_after_anonymous_functions = true
-spaces_in_brackets = false
