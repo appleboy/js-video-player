@@ -14,8 +14,6 @@
   "undef": true,
   "unused": "vars",
   "strict": true,
-  "trailing": true,
-  "smarttabs": true,
   "globals": {
     "$": false,
     "jQuery": false,
